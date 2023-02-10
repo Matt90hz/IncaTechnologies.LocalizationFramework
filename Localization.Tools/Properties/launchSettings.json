@@ -1,0 +1,9 @@
+{
+  "profiles": {
+    "Localization.Tools": {
+      "commandName": "Project",
+      "commandLineArgs": "-c \"en-EN, fr-FR, es-ES\"",
+      "workingDirectory": "D:\\VisualStudio\\LocalizationFramework\\Example"
+    }
+  }
+}

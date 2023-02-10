@@ -1,0 +1,37 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <PackageId>IncaTechnologies.$(AssemblyName)</PackageId>
+    <Title>Localization Tools</Title>
+    <Version>1.0.0</Version>
+    <Authors>IncaTechnologies</Authors>
+    <Company />
+    <Product>IncaTechnologies.$(AssemblyName)</Product>
+    <Description>Tools that can be invoked from Package Manager Console or dotnet Client. Create an incaLocalization file.</Description>
+    <Copyright>IncaTechnolologies - 2023</Copyright>
+    <PackAsTool>True</PackAsTool>
+    <ToolCommandName>inca-loc</ToolCommandName>
+    <PackageOutputPath>..\.nupkg</PackageOutputPath>
+    <NeutralLanguage>en</NeutralLanguage>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="CommandLineParser" Version="2.9.1" />
+    <PackageReference Include="Microsoft.CodeAnalysis.Analyzers" Version="3.3.4">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="4.4.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Localization\Localization.csproj" PrivateAssets="all"/>
+  </ItemGroup>
+
+
+</Project>
