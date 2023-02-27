@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<IncaTehcnologies NameSpace="Example" Class="ViewModelMainWindow">
+  <Localize Property="Title">
+    <en-US></en-US>
+  </Localize>
+  <Localize Property="Description">
+    <en-US></en-US>
+  </Localize>
+</IncaTehcnologies>

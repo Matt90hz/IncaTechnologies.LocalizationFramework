@@ -1,4 +1,4 @@
-﻿using Localization;
+﻿
 using Microsoft.CodeAnalysis;
 using System;
 using System.Collections.Generic;

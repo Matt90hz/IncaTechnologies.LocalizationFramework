@@ -19,10 +19,10 @@ namespace Localization.Tools
         /// </summary>
         public class Options
         {
-            [Option('v', "verbose", Required = false, HelpText = "Set output to verbose messages.")]
+            [Option('v', "verbose", Required = false, HelpText = "Show verbose messages.")]
             public bool Verbose { get; set; }
 
-            [Option("diagnostic", Required = false, HelpText = "See diagnostic messages.")]
+            [Option("diagnostic", Required = false, HelpText = "Show diagnostic messages.")]
             public bool Diagnostic { get; set; }
 
             [Option('i', "input", Required = false, HelpText = "Project folder.")]

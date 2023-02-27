@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 	
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
@@ -12,17 +12,11 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\Localization\Localization.csproj" />
-		<!--<ProjectReference Include="..\AutoIncaLocalize\AutoIncaLocalize.csproj" PrivateAssets="all" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />-->	  
+	  <Folder Include="Localization_\" />
+	  <Folder Include="Localization2\" />
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Folder Include="Localization\" />
-	</ItemGroup>
-
-	
-
-	<ItemGroup Label="IncaLocalizeResources">
-		<EmbeddedResource Include="D:\VisualStudio\LocalizationFramework\Example\Localization\Example.ViewModelMainWindow.incaloc" />
+	  <ProjectReference Include="..\Localization\Localization.csproj" />
 	</ItemGroup>
 </Project>
