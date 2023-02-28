@@ -68,7 +68,7 @@ Here is were `IncaLocGenerator` come into place. As for the reader it can be cus
 It has a method that generates .incaloc files but use it directly is not particularly useful since the method must know all the properties (including namespacees and classes) for the files to be generated.
 
 This object is ment to be used in a tool combined with the `IncaLocalizeAttribute`.
-The tool has aready been created and it is installed automatically when this framework is installed via Nuget package. 
+The tool has aready been created and it is installed (locally) automatically when this framework is installed via Nuget package. 
 If for some reason the installation fails it is possible to install the tool directly from dotnet client.
 Once installed it possible call the tool form the dotnet client (by default is installed locally in the directory of the solution and only from that directory or subdirecotories can be invoked):
 ```
