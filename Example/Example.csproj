@@ -6,14 +6,17 @@
     <Nullable>enable</Nullable>
     <UseWPF>true</UseWPF>
   </PropertyGroup>
+	
+  <ItemGroup>
+    <None Remove="Localization\Example.ViewModelMainWindow.incaloc" />
+  </ItemGroup>
+	
+  <ItemGroup>
+    <EmbeddedResource Include="Localization\Example.ViewModelMainWindow.incaloc" />
+  </ItemGroup>
 
 	<ItemGroup>
 	  <PackageReference Include="CommunityToolkit.Mvvm" Version="8.1.0" />
-	</ItemGroup>
-
-	<ItemGroup>
-	  <Folder Include="Localization_\" />
-	  <Folder Include="Localization2\" />
 	</ItemGroup>
 
 	<ItemGroup>

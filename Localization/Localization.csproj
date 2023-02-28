@@ -14,9 +14,19 @@
 		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
 		<ProduceReferenceAssembly>True</ProduceReferenceAssembly>
 		<ProduceReferenceAssemblyInOutDir>True</ProduceReferenceAssemblyInOutDir>
+		<PackageReadmeFile>README.md</PackageReadmeFile>
+		<PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
 	</PropertyGroup>
 
 	<ItemGroup>
+		<None Include="..\LICENSE.txt">
+		  <Pack>True</Pack>
+		  <PackagePath>\</PackagePath>
+		</None>
+		<None Include="..\README.md">
+		  <Pack>True</Pack>
+		  <PackagePath>\</PackagePath>
+		</None>
 		<None Include="tools\init.ps1" Pack="true" PackagePath="tools\" />
 		<None Include="tools\incatechnologies.localization.tools.psm1" Pack="true" PackagePath="tools\" />
 		<None Include="..\AutoIncaLocalize\bin\$(Configuration)\netstandard2.0\*.*" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />

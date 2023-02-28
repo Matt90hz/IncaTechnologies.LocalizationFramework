@@ -174,20 +174,3 @@ namespace Localization
     }
 
 }
-
-//< Project Sdk = "Microsoft.NET.Sdk" >
-
-
-//  < PropertyGroup >
-//    < OutputType > WinExe </ OutputType >
-//    < TargetFramework > net6.0 - windows </ TargetFramework >
-//    < Nullable > enable </ Nullable >
-//    < UseWPF > true </ UseWPF >
-//  </ PropertyGroup >
-
-
-//  < ItemGroup >
-//    < ProjectReference Include = "..\Localization\Localization.csproj" />
-//  </ ItemGroup >
-
-//</ Project >

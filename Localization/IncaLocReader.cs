@@ -2,6 +2,7 @@
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Xml.Linq;
 using Localization.Interfaces;
@@ -14,13 +15,13 @@ namespace Localization
     public class IncaLocReader : IncaLocBase, IIncaLocReader
     {
         /// <inheritdoc/>
-        public CultureInfo CurrentCulture { get; set; } = new CultureInfo("en-EN"); //Thread.CurrentThread.CurrentCulture;
+        public virtual CultureInfo CurrentCulture { get; set; } = Thread.CurrentThread.CurrentCulture;
 
         /// <inheritdoc/>
-        public CultureInfo DefaultCulture { get; set; } = new CultureInfo("es-ES"); // Thread.CurrentThread.CurrentCulture;
+        public virtual CultureInfo DefaultCulture { get; set; } = Thread.CurrentThread.CurrentCulture;
 
         /// <inheritdoc/>
-        public string GetText(IncaLocParameters parameters)
+        public virtual string GetText(IncaLocParameters parameters)
         {
             //Retrive the resource
             var assembly = Assembly.GetCallingAssembly();
@@ -33,10 +34,10 @@ namespace Localization
             //Manually dispose of the stream just in case
             stream.Dispose();
 
-            //Send back the value
-            return xml.Element(BASE_ELEMENT).Elements(LOCALIZE_ELEMENT)
-                .FirstOrDefault(le => le.Attribute(PROPERTY_ATTRIBUTE).Value == parameters.PropertyIdentifier)?
-                .Element(CurrentCulture.Name)?.Value.Trim().Replace('\t', '\0');
+            //return the current culture localized text or the default one if is not found.
+            return xml.Element(BASE_ELEMENT).Elements(LOCALIZE_ELEMENT).FirstOrDefault(le => le.Attribute(PROPERTY_ATTRIBUTE).Value == parameters.PropertyIdentifier) is XElement property ? 
+                (property.Element(CurrentCulture.Name) ?? property.Element(DefaultCulture.Name)) is XElement culture ? 
+                culture.Value.Trim().Replace('\t', '\0') : null : null;
         }
     }
 

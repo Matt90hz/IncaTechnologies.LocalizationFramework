@@ -23,7 +23,7 @@ namespace Localization
         /// </summary>
         /// <param name="parameters"></param>
         /// <returns>File name for the given <paramref name="parameters"/>.</returns>
-        protected string GetFileName(IncaLocParameters parameters)
+        protected virtual string GetFileName(IncaLocParameters parameters)
         {
             return $"{parameters.NameSpace}.{parameters.ClassIdentifier}.incaloc";
         }
