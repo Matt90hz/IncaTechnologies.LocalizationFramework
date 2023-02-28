@@ -142,7 +142,7 @@ I also mede this project to study more in depth how dotnet tools works, how Nuge
 My ultimate goal was not only crete a framework that I needed but I was also intrested in find out if I was able to crete a similar experience to the one provided by the Microsoft.EntityFrameworkCore.Tools and CommunityToolkit.Mvvm.
 
 In the next update if ever there will be one, I would like to use code generators in order to create programmatically the properties that has to be localized. This is the result I would like to get:
-```
+```csharp
 public partial class MyViewModel : _ViewModelBase
 {
     [IncaAutoLocalize]
