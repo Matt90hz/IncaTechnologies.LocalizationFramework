@@ -6,13 +6,13 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-    <PackageId>IncaTechnologies.$(AssemblyName)</PackageId>
-    <Title>Localization Tools</Title>
+    <PackageId>IncaTechnologies.LocalizationFramework.Tools</PackageId>
+    <Title>IncaTechnologies Localization Framework Tools</Title>
     <Version>1.0.0</Version>
     <Authors>IncaTechnologies</Authors>
     <Company />
-    <Product>IncaTechnologies.$(AssemblyName)</Product>
-    <Description>Tools that can be invoked from Package Manager Console or dotnet Client. Create an incaLocalization file.</Description>
+    <Product>$(Title)</Product>
+    <Description>Tools that can be invoked from Package Manager Console or dotnet Client. Creates .incaloc files.</Description>
     <Copyright>IncaTechnolologies - 2023</Copyright>
     <PackAsTool>True</PackAsTool>
     <ToolCommandName>inca-loc</ToolCommandName>
@@ -20,6 +20,9 @@
     <NeutralLanguage>en</NeutralLanguage>
     <PackageReadmeFile>README.TOOLS.md</PackageReadmeFile>
     <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
+    <PackageProjectUrl>https://github.com/Matt90hz/IncaTechnologies.LocalizationFramework</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/Matt90hz/IncaTechnologies.LocalizationFramework.git</RepositoryUrl>
+    <PackageTags>tool, incatechnologies, localization, localizationframework, translate</PackageTags>
   </PropertyGroup>
 
   <ItemGroup>

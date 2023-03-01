@@ -35,8 +35,14 @@ namespace Example
         /// </summary>
         public ChangeCultureCommand ChangeCultureCommand { get; } = new ChangeCultureCommand();
 
+        /// <summary>
+        /// Create e new instance of <see cref="ViewModelMainWindow"/> and initializes it.
+        /// </summary>
         public ViewModelMainWindow()
         {
+            IncaLocService.IncaLocReader.CurrentCulture = new CultureInfo("en-EN");
+            IncaLocService.IncaLocReader.DefaultCulture = new CultureInfo("en-EN");
+
             ChangeCultureCommand.CultureChanged += ChangeCultureCommand_CultureChanged;
         }
 

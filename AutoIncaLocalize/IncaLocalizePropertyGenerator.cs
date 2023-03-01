@@ -13,6 +13,9 @@ using System.Diagnostics;
 
 namespace AutoIncaLocalize
 {
+    /// <summary>
+    /// DO NOT USE IT. Just testing code generation.
+    /// </summary>
     [Generator]
     public class IncaLocalizePropertyGenerator : ISourceGenerator
     {
@@ -33,7 +36,6 @@ namespace AutoIncaLocalize
         {
             
         }
-
 
     }
 }
