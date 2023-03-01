@@ -4,7 +4,7 @@
 		<TargetFramework>netstandard2.0</TargetFramework>
 		<PackageId>IncaTechnologies.LocalizationFramework</PackageId>
 		<Title>IncaTechnologies Localization Framework</Title>
-		<Version>1.0.0</Version>
+		<Version>1.0.1</Version>
 		<Authors>IncaTechnologies</Authors>
 		<Company />
 		<Product>$(Title)</Product>
@@ -20,9 +20,14 @@
 		<RepositoryUrl>https://github.com/Matt90hz/IncaTechnologies.LocalizationFramework.git</RepositoryUrl>
 		<NeutralLanguage>en</NeutralLanguage>
 		<PackageTags>translate, localization</PackageTags>
+		<PackageIcon>IncaTechnologies_logo_128x128.png</PackageIcon>
 	</PropertyGroup>
 
 	<ItemGroup>
+		<None Include="..\..\..\IncaTechnologies\IncaTechnologies_logo_128x128.png">
+		  <Pack>True</Pack>
+		  <PackagePath>\</PackagePath>
+		</None>
 		<None Include="..\LICENSE.txt">
 		  <Pack>True</Pack>
 		  <PackagePath>\</PackagePath>

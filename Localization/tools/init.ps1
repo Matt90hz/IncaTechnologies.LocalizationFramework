@@ -13,10 +13,10 @@ $module = Get-Module IncaTechnologies.Localization.Tools
 #If no module is installed then is installed, else is updated just to be sure to have the latest version
 if($module -eq $null){
 	dotnet new tool-manifest --verbosity quiet
-	dotnet tool install IncaTechnologies.Localization.Tools
+	dotnet tool install IncaTechnologies.LocalizationFramework.Tools
 }
 else {
-	dotnet tool update IncaTechnologies.Localization.Tools --local
+	dotnet tool update IncaTechnologies.LocalizationFramework.Tools --local
 }
 
 #Imports the module to be used in the Package Manager Console
