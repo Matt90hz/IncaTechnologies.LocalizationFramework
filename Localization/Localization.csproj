@@ -4,7 +4,7 @@
 		<TargetFramework>netstandard2.0</TargetFramework>
 		<PackageId>IncaTechnologies.LocalizationFramework</PackageId>
 		<Title>IncaTechnologies Localization Framework</Title>
-		<Version>1.0.1</Version>
+		<Version>1.0.2</Version>
 		<Authors>IncaTechnologies</Authors>
 		<Company />
 		<Product>$(Title)</Product>
@@ -21,6 +21,7 @@
 		<NeutralLanguage>en</NeutralLanguage>
 		<PackageTags>translate, localization</PackageTags>
 		<PackageIcon>IncaTechnologies_logo_128x128.png</PackageIcon>
+		<GenerateDocumentationFile>True</GenerateDocumentationFile>
 	</PropertyGroup>
 
 	<ItemGroup>
