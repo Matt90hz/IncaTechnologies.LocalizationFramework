@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 	
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
@@ -17,5 +17,9 @@
 
 	<ItemGroup>
 	  <ProjectReference Include="..\Localization\Localization.csproj" />
+	</ItemGroup>
+
+	<ItemGroup Label="IncaLocalizeResources">
+		<EmbeddedResource Include="D:\VisualStudio\LocalizationFramework\Example\Localization\Example._ViewModelBase.incaloc" />
 	</ItemGroup>
 </Project>

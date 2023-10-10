@@ -23,7 +23,7 @@
 		<PackageIcon>IncaTechnologies_logo_128x128.png</PackageIcon>
 		<GenerateDocumentationFile>True</GenerateDocumentationFile>
 		<PackageReleaseNotes>1.0.0 - Release
-1.0.1 - Dug fix
+1.0.1 - Bug fix
 1.0.2 - Included documentation</PackageReleaseNotes>
 	</PropertyGroup>
 

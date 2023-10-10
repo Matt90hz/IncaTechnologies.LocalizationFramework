@@ -7,184 +7,184 @@ using System.Diagnostics;
 using System.Collections.Generic;
 using System;
 using System.Text;
+using Localization.Tools.Extensions;
 using Localization.Interfaces;
 using System.Globalization;
+using System.Reflection.Emit;
 
-namespace Localization.Tools
+namespace Localization.Tools;
+
+/// <summary>
+/// Parse the arguments passed to the <see cref="Main(string[])"/> method.
+/// </summary>
+public class Options
 {
-    internal class Program
+    public const string DefaultGenerator = "DEFAULT_GENERATOR";
+
+    [Option('v', "verbose", Required = false, HelpText = "Show verbose messages.")]
+    public bool Verbose { get; set; }
+
+    [Option("diagnostic", Required = false, HelpText = "Show diagnostic messages.")]
+    public bool Diagnostic { get; set; }
+
+    [Option('i', "input", Required = false, HelpText = "Project folder.")]
+    public string Input { get; set; } = Environment.CurrentDirectory;
+
+    [Option('o', "output", Required = false, HelpText = "Where the localization file will be stored.")]
+    public string Output { get; set; } = Path.Combine(Environment.CurrentDirectory, @"Localization");
+
+    [Option('g', "generator", Required = false, HelpText = "Specify a different custom file generator.")]
+    public string IncaLocGenerator { get; set; } = DefaultGenerator;
+
+    [Option('c', "cultures", Required = false, Separator = ',', HelpText = "All the culture codes separated by commas (ex: -c \"en-EN, fr-FR, es-ES\")")]
+    public IEnumerable<string> Cultures { get; set; } = new[] { Thread.CurrentThread.CurrentCulture.Name };
+
+}
+
+internal static class OptionsExtensions
+{
+    private static readonly Action<Exception> _log = e => Console.WriteLine(e.Message);
+
+    internal static IIncaLocGenerator GetGenerator(this Options options) => options.IncaLocGenerator switch
     {
-        /// <summary>
-        /// Parse the arguments passed to the <see cref="Main(string[])"/> method.
-        /// </summary>
-        public class Options
+        _ => new IncaLocGenerator(
+            storeLocation: options.Output,
+            projectFile: Directory.GetFiles(options.Input).First(f => f.EndsWith(".csproj", StringComparison.OrdinalIgnoreCase)),
+            cultureInfos: options.Cultures.Select(c => new CultureInfo(c.Trim())))
+    };
+
+    internal static Uri? ValidateInput(this Options options, Action<Exception>? log = null)
+    {
+        log ??= _log;
+
+        Uri uri;
+        try
         {
-            [Option('v', "verbose", Required = false, HelpText = "Show verbose messages.")]
-            public bool Verbose { get; set; }
+            uri = new Uri(options.Input);
 
-            [Option("diagnostic", Required = false, HelpText = "Show diagnostic messages.")]
-            public bool Diagnostic { get; set; }
+            if (!uri.UriContainsCsproj())
+            {
+                log(new Exception("Invalid Input. The Input path must contain a .csproj file."));
+                return null;
+            }
 
-            [Option('i', "input", Required = false, HelpText = "Project folder.")]
-            public string Input { get; set; } = Environment.CurrentDirectory;
-
-            [Option('o', "output", Required = false, HelpText = "Where the localization file will be stored.")]
-            public string Output { get; set; } = Path.Combine(Environment.CurrentDirectory, @"Localization");
-
-            [Option('g', "generator", Required = false, HelpText = "Specify a different custom file generator.")]
-            public IIncaLocGenerator? IncaLocGenerator { get; set; }
-
-            [Option('c', "cultures", Required = false, Separator = ',', HelpText = "All the culture codes separated by commas (ex: -c \"en-EN, fr-FR, es-ES\")")]
-            public IEnumerable<string>? Cultures { get; set; }
-
-            public bool IsValidInput => Directory.GetFiles(Input).Any(f => f.EndsWith(".csproj"));
-
-            public bool IsValidOutput => Uri.TryCreate(Output, UriKind.Absolute, out _);
-
+            return uri;
         }
-
-        /// <summary>
-        /// Entry point
-        /// </summary>
-        /// <param name="args"></param>
-        static void Main(string[] args)
+        catch (Exception e)
         {
-            //Parse args
-            Parser.Default.ParseArguments<Options>(args).WithParsed(RunOptions);
+            log(e);
+            return null;
         }
+    }
 
-        /// <summary>
-        /// Runned if argument parsing succeed.
-        /// </summary>
-        /// <param name="opts"></param>
-        static void RunOptions(Options opts)
+    internal static Uri? ValidateOutput(this Options options, Action<Exception>? log = null)
+    {
+        log ??= _log;
+
+        Uri uri;
+        try
         {
-            //Check if the current directory is a project directory
-            if (!opts.IsValidInput)
-            { 
-                Console.WriteLine("Invalid Input. The Input path must contain a .csproj file.");
-                return;
-            }
-
-            //Check if output path is valid
-            if (!opts.IsValidOutput)
-            {
-                Console.WriteLine("Invalid Output. The Output path is not a valid uri.");
-                return;
-            }
-
-            //VERBOSE
-            if (opts.Verbose) 
-            { 
-                Console.WriteLine($"Input path: {opts.Input}");
-                Console.WriteLine($"Output path: {opts.Output}\n");
-            }
-
-            //IncaLocGenerator
-            var incaloc = opts.IncaLocGenerator ?? new IncaLocGenerator(
-                storeLocation: opts.Output,
-                projectFile: Directory.GetFiles(opts.Input).First(f => f.EndsWith(".csproj", StringComparison.OrdinalIgnoreCase)),
-                cultureInfos: opts.Cultures?.Any() ?? false ? opts.Cultures.Select(c => new CultureInfo(c.Trim())) : null);
-
-            //Get all the .cs file in the Input directory
-            var csFiles = Directory.GetFiles(opts.Input, "*.cs", SearchOption.AllDirectories);       
-
-            //Look for LocalizeAttribute in each .cs file
-            foreach (var csFile in csFiles)
-            {
-                GenerateIncalocFile(csFile, incaloc, opts.Verbose, opts.Diagnostic);
-            }
-
-            //Inform that the task is completed
-            Console.WriteLine("Localization files generated.");
+            uri = new Uri(options.Output);
+            return uri;
         }
-
-        /// <summary>
-        /// Generates .incaloc Files based on the presence of an <see cref="IncaLocalizeAttribute"/> in the classes contained in the <paramref name="csFile"/>.
-        /// </summary>
-        /// <param name="csFile">Path of the cs file to analyze</param>
-        /// <param name="incaLocGenerator">Generator for .incaloc files</param>
-        /// <param name="verbose">Show verbose messages to the console</param>
-        /// <param name="diagnostic">Show diagnostic message to the console</param>
-        static void GenerateIncalocFile(string csFile, IIncaLocGenerator incaLocGenerator, bool verbose, bool diagnostic)
+        catch (Exception e)
         {
-            //VERBOSE
-            if (verbose) Console.WriteLine($"Analyze file: {csFile}");
+            log(e);
+            return null;
+        }
+    }
+}
 
-            //Parse text into SyntaxTree
-            var tree = CSharpSyntaxTree.ParseText(File.ReadAllText(csFile));
+internal class Program
+{
+    private static readonly IEnumerable<PortableExecutableReference> _defaultPortableExecutableReferences = new PortableExecutableReference[]
+    {
+        MetadataReference.CreateFromFile(typeof(object).Assembly.Location),
+        MetadataReference.CreateFromFile(typeof(Attribute).Assembly.Location),
+        MetadataReference.CreateFromFile(typeof(IncaLocGenerator).Assembly.Location),
+    };
 
-            //Get all properties decorated with attributes
-            var attributes = tree.GetRoot().DescendantNodes().OfType<PropertyDeclarationSyntax>()
-                .Where(p => p.AttributeLists.Any())
-                .Select(p => p.AttributeLists.SelectMany(al => al.Attributes)).SelectMany(a => a)
-                .ToArray();
+    private static readonly CSharpCompilation _compilation = CSharpCompilation.Create("NotRelevant")
+        .WithOptions(new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary))
+        .AddReferences(_defaultPortableExecutableReferences);
 
-            //No properties decorated with attributes found
-            if (!attributes.Any())
+    static void Main(string[] args) => Parser.Default
+        .ParseArguments<Options>(args)
+        .WithParsed(GenerateIncaLocFiles);
+
+    static void GenerateIncaLocFiles(Options options)
+    {
+        if (options.ValidateInput() is not Uri inputUri) return;
+        if (options.ValidateOutput() is null) return;
+
+        GenerateIncaLocFiles(inputUri, options);
+    }
+
+    static void GenerateIncaLocFiles(Uri input, Options options)
+    {
+        var files = input.GetDotCsFiles();
+        var generator = options.GetGenerator();
+
+        foreach (var file in files)
+        {
+            if (options.Verbose) Log($"Analyzing file: {file}");
+
+            GenerateIncaLocFile(file, generator, options);
+        }
+    }
+
+    static void GenerateIncaLocFile(Uri uri, IIncaLocGenerator generator, Options options) => WriteIncaLocFile(uri.TryReadFile(), generator, options);     
+
+    static void WriteIncaLocFile(string file, IIncaLocGenerator generator, Options options)
+    {
+        var attributes = GetLocalizeAttributes(file, options);
+
+        foreach (var attribute in attributes)
+        {
+            var param = attribute.ToIncaLocParameters();
+
+            try
             {
-                //VERBOSE
-                if (verbose) Console.WriteLine("None of the properties is decorated with attributes.\n");
-                return;
+                generator.Generate(param);
+
+                if (options.Verbose) Log($"Generated .incaloc for {param}.");
             }
-
-            //Create a compiled program form the syntax tree
-            var compilation = CSharpCompilation.Create("NotRelevant")
-                    .WithOptions(new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary))
-                    .AddReferences(PortableExecutableReferenceProvider.PortableExecutableReferences)
-                    .AddSyntaxTrees(tree);
-            
-            //Compile the SyntaxTree for semantic analisys
-            var model = compilation.GetSemanticModel(tree);
-
-            //DIAGNOSTIC
-            if (diagnostic) WriteDiagnostic(model.Compilation);
-
-            //Get all attributes that are of Type LocalizationAttribute
-            var localizeAttributes = attributes.Where(a => model.GetTypeInfo(a).Type?.Name == nameof(Localization.IncaLocalizeAttribute)).ToArray();
-
-            //No properties decorated with LocalizeAttribute found
-            if (!localizeAttributes.Any())
+            catch (Exception e)
             {
-                //VERBOSE
-                if (verbose) Console.WriteLine("None of the properties is decorated with LocalizeAttribute.\n");
-                return;
-            }
-
-            //Project attributes in IncaLocGeneratorParamenters
-            var incalocParams = localizeAttributes.Select(la => new IncaLocParameters(
-                nameSpace: la.Ancestors().OfType<NamespaceDeclarationSyntax>().First().Name.ToString(),
-                classIdentifier: la.Ancestors().OfType<ClassDeclarationSyntax>().First().Identifier.Text,
-                propertyIdentifier: la.Ancestors().OfType<PropertyDeclarationSyntax>().First().Identifier.Text))
-                .ToArray();
-
-            //Generate incaloc files
-            incaLocGenerator.Generate(incalocParams);
-
-            //VERBOSE
-            if (verbose)
-            {
-                Console.WriteLine("Generated a .incaloc file for the following properties:");
-                Console.WriteLine(incalocParams
-                    .Select(ip => string.Join(".", ip.NameSpace, ip.ClassIdentifier, ip.PropertyIdentifier))
-                    .Aggregate("", (result, next) => result + next + "\n"));
+                if (options.Verbose) Log($"Failed to generate .incaloc for {param}.\n{e.Message}\n");
             }
         }
+    }
 
-        static void WriteDiagnostic(Compilation compilation)
-        {           
-            Console.WriteLine("DIAGNOSTIC");
-            Console.WriteLine(compilation.GetDiagnostics()
-                .Where(d => d.Severity == DiagnosticSeverity.Error)
-                .Select(d => d.GetMessage())
-                .Aggregate("", (result, next) => result + next + "\n"));
+    static IEnumerable<AttributeSyntax> GetLocalizeAttributes(string file, Options options)
+    {
+        if (string.IsNullOrEmpty(file)) return Enumerable.Empty<AttributeSyntax>();
 
-            Console.WriteLine("END DIAGNOSTIC\n");
-            
-        }
+        var syntaxTree = CSharpSyntaxTree.ParseText(file);
 
+        return FindLocalizeAttributes(syntaxTree, options).LogIfEmpty("No properties are decorated with IncaLocalizeAttribute.");
+    }
 
+    static IEnumerable<AttributeSyntax> FindLocalizeAttributes(SyntaxTree syntaxTree, Options options)
+    {
+        var compilation = _compilation.AddSyntaxTrees(syntaxTree);
+
+        if (options.Diagnostic) WriteDiagnostic(compilation);
+
+        return syntaxTree.FindAttributeOfType(compilation, typeof(IncaLocalizeAttribute));
+    }
+
+    static void WriteDiagnostic(Compilation compilation)
+    {
+        Log("DIAGNOSTIC");
+        Log(compilation.GetDiagnostics()
+            .Where(d => d.Severity == DiagnosticSeverity.Error)
+            .Select(d => d.GetMessage())
+            .Aggregate("", (result, next) => result + next + "\n"));
+
+        Log("END DIAGNOSTIC\n");
 
     }
-    
+
+    static void Log(string message) => Console.WriteLine(message);
 }

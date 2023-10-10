@@ -14,6 +14,11 @@ namespace Localization
     /// </summary>
     public class IncaLocReader : IncaLocBase, IIncaLocReader
     {
+        /// <summary>
+        /// Default instance of <see cref="IncaLocReader"/>.
+        /// </summary>
+        public static IncaLocReader Default { get; } = new IncaLocReader();
+
         /// <inheritdoc/>
         public virtual CultureInfo CurrentCulture { get; set; } = Thread.CurrentThread.CurrentCulture;
 
@@ -35,7 +40,10 @@ namespace Localization
             stream.Dispose();
 
             //return the current culture localized text or the default one if is not found.
-            return xml.Element(BASE_ELEMENT).Elements(LOCALIZE_ELEMENT).FirstOrDefault(le => le.Attribute(PROPERTY_ATTRIBUTE).Value == parameters.PropertyIdentifier) is XElement property ? 
+            return xml
+                .Element(BASE_ELEMENT)
+                .Elements(LOCALIZE_ELEMENT)
+                .FirstOrDefault(le => le.Attribute(PROPERTY_ATTRIBUTE).Value == parameters.PropertyIdentifier) is XElement property ? 
                 (property.Element(CurrentCulture.Name) ?? property.Element(DefaultCulture.Name)) is XElement culture ? 
                 culture.Value.Trim().Replace('\t', '\0') : null : null;
         }

@@ -2,7 +2,7 @@
   "profiles": {
     "Localization.Tools": {
       "commandName": "Project",
-      "commandLineArgs": "-c \"en-EN, fr-FR, es-ES\"",
+      "commandLineArgs": "-v -o D:\\VisualStudio\\LocalizationFramework\\Example\\TestToday -c \"en-EN, fr-FR, es-ES\"",
       "workingDirectory": "D:\\VisualStudio\\LocalizationFramework\\Example"
     }
   }
