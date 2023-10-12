@@ -2,8 +2,14 @@
 <IncaTehcnologies NameSpace="Example" Class="ViewModelMainWindow">
   <Localize Property="Title">
     <en-US></en-US>
+    <en-EN></en-EN>
+    <fr-FR></fr-FR>
+    <es-ES></es-ES>
   </Localize>
   <Localize Property="Description">
     <en-US></en-US>
+    <en-EN></en-EN>
+    <fr-FR></fr-FR>
+    <es-ES></es-ES>
   </Localize>
 </IncaTehcnologies>

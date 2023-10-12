@@ -11,6 +11,7 @@ using Localization.Tools.Extensions;
 using Localization.Interfaces;
 using System.Globalization;
 using System.Reflection.Emit;
+using ExceptionResult;
 
 namespace Localization.Tools;
 
@@ -20,6 +21,7 @@ namespace Localization.Tools;
 public class Options
 {
     public const string DefaultGenerator = "DEFAULT_GENERATOR";
+    public const string CSVGenerator = "CSV_GENERATOR";
 
     [Option('v', "verbose", Required = false, HelpText = "Show verbose messages.")]
     public bool Verbose { get; set; }
@@ -28,10 +30,10 @@ public class Options
     public bool Diagnostic { get; set; }
 
     [Option('i', "input", Required = false, HelpText = "Project folder.")]
-    public string Input { get; set; } = Environment.CurrentDirectory;
+    public string Input { get; set; } = DefautInput.ToString();
 
     [Option('o', "output", Required = false, HelpText = "Where the localization file will be stored.")]
-    public string Output { get; set; } = Path.Combine(Environment.CurrentDirectory, @"Localization");
+    public string Output { get; set; } = DefautOuput.ToString();
 
     [Option('g', "generator", Required = false, HelpText = "Specify a different custom file generator.")]
     public string IncaLocGenerator { get; set; } = DefaultGenerator;
@@ -39,60 +41,61 @@ public class Options
     [Option('c', "cultures", Required = false, Separator = ',', HelpText = "All the culture codes separated by commas (ex: -c \"en-EN, fr-FR, es-ES\")")]
     public IEnumerable<string> Cultures { get; set; } = new[] { Thread.CurrentThread.CurrentCulture.Name };
 
+    public static Uri DefautOuput => new (Path.Combine(Environment.CurrentDirectory, @"Localization"));
+    public static Uri DefautInput => new (Environment.CurrentDirectory);
+
 }
 
 internal static class OptionsExtensions
 {
-    private static readonly Action<Exception> _log = e => Console.WriteLine(e.Message);
-
-    internal static IIncaLocGenerator GetGenerator(this Options options) => options.IncaLocGenerator switch
+    internal static Exception<IIncaLocGenerator> Generator(this Options options)
     {
-        _ => new IncaLocGenerator(
-            storeLocation: options.Output,
-            projectFile: Directory.GetFiles(options.Input).First(f => f.EndsWith(".csproj", StringComparison.OrdinalIgnoreCase)),
-            cultureInfos: options.Cultures.Select(c => new CultureInfo(c.Trim())))
-    };
-
-    internal static Uri? ValidateInput(this Options options, Action<Exception>? log = null)
-    {
-        log ??= _log;
-
-        Uri uri;
         try
         {
-            uri = new Uri(options.Input);
-
-            if (!uri.UriContainsCsproj())
+            return options.IncaLocGenerator switch
             {
-                log(new Exception("Invalid Input. The Input path must contain a .csproj file."));
-                return null;
-            }
-
-            return uri;
+                _ => new IncaLocGenerator(
+                        options.ValidateOutput().Value(),
+                        options.ValidateInput().Value().FileWithExtension("csproj")!,
+                        options.Cultures.Select(c => new CultureInfo(c.Trim())))
+            };
         }
-        catch (Exception e)
+        catch (Exception<Uri> e)
         {
-            log(e);
-            return null;
+            return new Exception<IIncaLocGenerator>("Failed to create a generator.", e);
         }
     }
 
-    internal static Uri? ValidateOutput(this Options options, Action<Exception>? log = null)
+    internal static Exception<Uri> ValidateInput(this Options options)
     {
-        log ??= _log;
-
-        Uri uri;
         try
         {
-            uri = new Uri(options.Output);
+            var uri = new Uri(options.Input);
+
+            if (!uri.UriContainsCsproj()) return new Exception<Uri>("Invalid Input. The Input path must contain a .csproj file.");
+               
+            return uri;
+        }
+        catch (Exception e)
+        {       
+            return new Exception<Uri>("Invalid Input.", e);
+        }
+    }
+
+    internal static Exception<Uri> ValidateOutput(this Options options, Action<Exception>? log = null)
+    {
+        try
+        {
+            var uri = new Uri(options.Output);
+
             return uri;
         }
         catch (Exception e)
         {
-            log(e);
-            return null;
+            return new Exception<Uri>("Invalid Output.", e);
         }
     }
+
 }
 
 internal class Program
@@ -114,29 +117,30 @@ internal class Program
 
     static void GenerateIncaLocFiles(Options options)
     {
-        if (options.ValidateInput() is not Uri inputUri) return;
-        if (options.ValidateOutput() is null) return;
-
-        GenerateIncaLocFiles(inputUri, options);
-    }
-
-    static void GenerateIncaLocFiles(Uri input, Options options)
-    {
-        var files = input.GetDotCsFiles();
-        var generator = options.GetGenerator();
-
-        foreach (var file in files)
+        try
         {
-            if (options.Verbose) Log($"Analyzing file: {file}");
+            var generator = options.Generator().Value();
+            var dotCsfiles = new Uri(options.Input).DotCsFiles();
 
-            GenerateIncaLocFile(file, generator, options);
+            foreach (var file in dotCsfiles)
+            {
+                if (options.Verbose) Log($"Analyzing file: {file}");
+
+                GenerateIncaLocFile(file, generator, options);
+
+                if (options.Verbose) Log(string.Empty);
+            }
+        }
+        catch(Exception<IIncaLocGenerator> e)
+        {
+            Console.WriteLine(e);
+            return;
         }
     }
 
-    static void GenerateIncaLocFile(Uri uri, IIncaLocGenerator generator, Options options) => WriteIncaLocFile(uri.TryReadFile(), generator, options);     
-
-    static void WriteIncaLocFile(string file, IIncaLocGenerator generator, Options options)
+    static void GenerateIncaLocFile(Uri uri, IIncaLocGenerator generator, Options options)
     {
+        var file = uri.TryReadFile();
         var attributes = GetLocalizeAttributes(file, options);
 
         foreach (var attribute in attributes)
@@ -151,7 +155,7 @@ internal class Program
             }
             catch (Exception e)
             {
-                if (options.Verbose) Log($"Failed to generate .incaloc for {param}.\n{e.Message}\n");
+                if (options.Verbose) Log($"Failed to generate .incaloc for {param}.\n{e}\n");
             }
         }
     }

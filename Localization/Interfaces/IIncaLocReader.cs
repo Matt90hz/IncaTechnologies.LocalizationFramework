@@ -26,8 +26,8 @@ namespace Localization.Interfaces
         /// Retrive the localized text form the .incaloc file specified by the <paramref name="parameters"/>.
         /// </summary>
         /// <param name="parameters"></param>
-        /// <returns>Returns <c>null</c> if the translation is not found in the .incaloc file.</returns>
-        /// <exception cref="FileNotFoundException"></exception>
+        /// <returns>Returns <c>string.Empty</c> if the translation is not found in the .incaloc file.</returns>
+        /// <exception cref="System.IO.FileNotFoundException">Throws when there is no .incaloc file in the resources</exception>
         string GetText(IncaLocParameters parameters);
     }
 

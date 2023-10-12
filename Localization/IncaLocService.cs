@@ -15,6 +15,7 @@ namespace Localization
         /// <summary>
         /// Get <see cref="Localization.IncaLocReader"/>.
         /// </summary>
+        [Obsolete("Use IncaLocReader.Default instead.")]
         public static IncaLocReader IncaLocReader { get; set; } = new IncaLocReader();
 
     }

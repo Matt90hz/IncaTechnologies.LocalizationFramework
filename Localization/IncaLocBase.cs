@@ -16,17 +16,7 @@ namespace Localization
         protected const string NAME_SPACE_ATTRIBUTE = "NameSpace";
         protected const string CLASS_ATTRIBUTE = "Class";
         protected const string LOCALIZE_ELEMENT = "Localize";
-        protected const string PROPERTY_ATTRIBUTE = "Property";
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="parameters"></param>
-        /// <returns>File name for the given <paramref name="parameters"/>.</returns>
-        protected virtual string GetFileName(IncaLocParameters parameters)
-        {
-            return $"{parameters.NameSpace}.{parameters.ClassIdentifier}.incaloc";
-        }
+        protected const string PROPERTY_ATTRIBUTE = "Property";    
     }
 
 }

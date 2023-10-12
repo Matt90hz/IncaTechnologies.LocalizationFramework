@@ -1,25 +1,17 @@
-<Project Sdk="Microsoft.NET.Sdk">
-	
-  <PropertyGroup>
-    <OutputType>WinExe</OutputType>
-    <TargetFramework>net6.0-windows</TargetFramework>
-    <Nullable>enable</Nullable>
-    <UseWPF>true</UseWPF>
-  </PropertyGroup>
-	
-  <ItemGroup>
-    <None Remove="Localization\Example.ViewModelMainWindow.incaloc" />
-  </ItemGroup>
-	
-  <ItemGroup>
-    <EmbeddedResource Include="Localization\Example.ViewModelMainWindow.incaloc" />
-  </ItemGroup>
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<OutputType>WinExe</OutputType>
+		<TargetFramework>net6.0-windows</TargetFramework>
+		<Nullable>enable</Nullable>
+		<UseWPF>true</UseWPF>
+	</PropertyGroup>
 
 	<ItemGroup>
 	  <ProjectReference Include="..\Localization\Localization.csproj" />
 	</ItemGroup>
 
 	<ItemGroup Label="IncaLocalizeResources">
-		<EmbeddedResource Include="D:\VisualStudio\LocalizationFramework\Example\Localization\Example._ViewModelBase.incaloc" />
+		<EmbeddedResource Include="D:\VisualStudio\LocalizationFramework\Example\Localization\Example.ViewModelMainWindow.incaloc" />
 	</ItemGroup>
 </Project>

@@ -4,7 +4,6 @@ using System.ComponentModel;
 using System.Globalization;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
-using Example.Interfaces;
 using Localization;
 
 namespace Example
@@ -29,7 +28,7 @@ namespace Example
         /// <summary>
         /// Item source used to change the culture.
         /// </summary>
-        public IEnumerable<string> SupportedCulture { get; } = new[] { "en-EN", "fr-FR", "es-ES" };
+        public IEnumerable<string> SupportedCulture { get; } = new[] { "en-EN", "fr-FR", "es-ES", "en", "es", "fr", "en-US", "cz" };
 
         /// <summary>
         /// Command to test the change of the culture.
@@ -41,8 +40,8 @@ namespace Example
         /// </summary>
         public ViewModelMainWindow()
         {
-            IncaLocService.IncaLocReader.CurrentCulture = new CultureInfo("en-EN");
-            IncaLocService.IncaLocReader.DefaultCulture = new CultureInfo("en-EN");
+            IncaLocReader.Default.CurrentCulture = new CultureInfo("en-EN");
+            IncaLocReader.Default.DefaultCulture = new CultureInfo("en");
 
             ChangeCultureCommand.CultureChanged += ChangeCultureCommand_CultureChanged;
         }
@@ -79,8 +78,8 @@ namespace Example
 
         public void Execute(object? parameter)
         {
-            IncaLocService.IncaLocReader.CurrentCulture = new CultureInfo((string?)parameter ?? "en-EN");
-            CultureChanged?.Invoke(this, IncaLocService.IncaLocReader.CurrentCulture);
+            IncaLocReader.Default.CurrentCulture = new CultureInfo((string?)parameter ?? "en-EN");
+            CultureChanged?.Invoke(this, IncaLocReader.Default.CurrentCulture);
         }
     }
 
@@ -108,9 +107,11 @@ namespace Example
         /// <returns></returns>
         protected virtual string GetText([CallerMemberName] string? propertyName = null)
         {
-            return IncaLocService.IncaLocReader.GetText(new IncaLocParameters(
-                nameSpace: this.GetType().Namespace,
-                classIdentifier: this.GetType().Name,
+            if (propertyName is null) return string.Empty;
+
+            return IncaLocReader.Default.GetText(new IncaLocParameters(
+                nameSpace: GetType().Namespace!,
+                classIdentifier: GetType().Name,
                 propertyIdentifier: propertyName));
         }
     }
