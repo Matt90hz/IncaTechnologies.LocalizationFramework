@@ -11,7 +11,7 @@ using Localization.Tools.Extensions;
 using Localization.Interfaces;
 using System.Globalization;
 using System.Reflection.Emit;
-using ExceptionResult;
+using Localization.Tools.ExeptionResult;
 
 namespace Localization.Tools;
 

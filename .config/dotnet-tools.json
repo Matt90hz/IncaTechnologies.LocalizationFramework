@@ -1,5 +1,12 @@
 {
   "version": 1,
   "isRoot": true,
-  "tools": {}
+  "tools": {
+    "incatechnologies.localizationframework.tools": {
+      "version": "1.0.1",
+      "commands": [
+        "inca-loc"
+      ]
+    }
+  }
 }

@@ -5,14 +5,14 @@
 		<Nullable>enable</Nullable>
 		<PackageId>IncaTechnologies.LocalizationFramework</PackageId>
 		<Title>IncaTechnologies Localization Framework</Title>		
-		<Version>1.0.2</Version>
+		<Version>1.0.3</Version>
 		<Authors>IncaTechnologies</Authors>
 		<Company />
 		<Product>$(Title)</Product>
 		<Description>Utility to support multi-language in your projects.</Description>
 		<Copyright>IncaTechnologies - 2023</Copyright>
 		<PackageOutputPath>..\.nupkg</PackageOutputPath>
-		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+		<GeneratePackageOnBuild>False</GeneratePackageOnBuild>
 		<ProduceReferenceAssembly>True</ProduceReferenceAssembly>
 		<ProduceReferenceAssemblyInOutDir>True</ProduceReferenceAssemblyInOutDir>
 		<PackageReadmeFile>README.md</PackageReadmeFile>
@@ -25,7 +25,8 @@
 		<GenerateDocumentationFile>True</GenerateDocumentationFile>
 		<PackageReleaseNotes>1.0.0 - Release
 1.0.1 - Bug fix
-1.0.2 - Included documentation</PackageReleaseNotes>
+1.0.2 - Included documentation
+1.0.3 - Improved stability</PackageReleaseNotes>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -44,10 +45,6 @@
 		<None Include="tools\init.ps1" Pack="true" PackagePath="tools\" />
 		<None Include="tools\incatechnologies.localization.tools.psm1" Pack="true" PackagePath="tools\" />
 		<None Include="..\AutoIncaLocalize\bin\$(Configuration)\netstandard2.0\*.*" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
-	</ItemGroup>
-
-	<ItemGroup>
-	  <ProjectReference Include="..\ExceptionResult\ExceptionResult.csproj" />
 	</ItemGroup>
 
 </Project>

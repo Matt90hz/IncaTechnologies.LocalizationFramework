@@ -51,7 +51,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ExceptionResult\ExceptionResult.csproj" />
     <ProjectReference Include="..\Localization\Localization.csproj" PrivateAssets="all" />
   </ItemGroup>
 

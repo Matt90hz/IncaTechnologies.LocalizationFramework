@@ -1,0 +1,6 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<IncaTehcnologies NameSpace="Example.Tool" Class="ViewModel">
+  <Localize Property="TestProperty">
+    <en-US></en-US>
+  </Localize>
+</IncaTehcnologies>
