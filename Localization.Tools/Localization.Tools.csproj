@@ -25,7 +25,8 @@
     <PackageTags>tool, incatechnologies, localization, localizationframework, translate</PackageTags>
     <PackageIcon>IncaTechnologies_logo_128x128.png</PackageIcon>
     <PackageReleaseNotes>1.0.1 - Release
-1.0.2 - Bug fix and improvments</PackageReleaseNotes>
+1.0.2 - Bug fix and improvments
+1.0.3 - Bug fix could not find localize attribute</PackageReleaseNotes>
   </PropertyGroup>
 
   <ItemGroup>

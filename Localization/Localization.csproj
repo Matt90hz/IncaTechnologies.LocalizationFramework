@@ -5,7 +5,7 @@
 		<Nullable>enable</Nullable>
 		<PackageId>IncaTechnologies.LocalizationFramework</PackageId>
 		<Title>IncaTechnologies Localization Framework</Title>		
-		<Version>1.0.3</Version>
+		<Version>1.0.4</Version>
 		<Authors>IncaTechnologies</Authors>
 		<Company />
 		<Product>$(Title)</Product>

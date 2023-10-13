@@ -104,6 +104,7 @@ internal class Program
     {
         MetadataReference.CreateFromFile(typeof(object).Assembly.Location),
         MetadataReference.CreateFromFile(typeof(Attribute).Assembly.Location),
+        MetadataReference.CreateFromFile(typeof(IncaLocalizeAttribute).Assembly.Location),
         MetadataReference.CreateFromFile(typeof(IncaLocGenerator).Assembly.Location),
     };
 
