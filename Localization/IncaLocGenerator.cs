@@ -1,4 +1,4 @@
-﻿using Localization.ExeptionResult;
+﻿using Localization.ExceptionResult;
 using Localization.Extensions;
 using Localization.Interfaces;
 using System;

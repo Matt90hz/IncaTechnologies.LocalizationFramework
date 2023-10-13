@@ -26,7 +26,8 @@
 		<PackageReleaseNotes>1.0.0 - Release
 1.0.1 - Bug fix
 1.0.2 - Included documentation
-1.0.3 - Improved stability</PackageReleaseNotes>
+1.0.3 - Improved stability
+1.0.4 - Removed the source generator that was never implemented</PackageReleaseNotes>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -44,7 +45,8 @@
 		</None>
 		<None Include="tools\init.ps1" Pack="true" PackagePath="tools\" />
 		<None Include="tools\incatechnologies.localization.tools.psm1" Pack="true" PackagePath="tools\" />
-		<None Include="..\AutoIncaLocalize\bin\$(Configuration)\netstandard2.0\*.*" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
+		<!--removed the analyzer from the package-->
+		<!--<None Include="..\AutoIncaLocalize\bin\$(Configuration)\netstandard2.0\*.*" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />-->
 	</ItemGroup>
 
 </Project>

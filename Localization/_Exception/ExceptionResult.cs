@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Runtime.CompilerServices;
 
-namespace Localization.ExeptionResult
+namespace Localization.ExceptionResult
 {
     internal class Exception<T> : Exception
     {
@@ -12,29 +12,21 @@ namespace Localization.ExeptionResult
             ValueOrDefault = value;
         }
 
-        internal Exception()
-        {
+        internal Exception() { }
 
-        }
+        internal Exception(string message) : base(message) { }
 
-        internal Exception(string message) : base(message)
-        {
-
-        }
-
-        internal Exception(string message, Exception innerException) : base(message, innerException)
-        {
-            
-        }
+        internal Exception(string message, Exception innerException) : base(message, innerException) { }
 
         public static implicit operator Exception<T>(T t) => new Exception<T>(t);
         public static implicit operator T(Exception<T> exception) => exception.ValueOrDefault;
-
     }
 
     internal static class ExceptionExtensions
     {
         internal static Exception<T> ToException<T>(this T t) => new Exception<T>(t);
+
+        internal static Exception<T> ToException<T>(this Exception e) => new Exception<T>(e.Message, e.InnerException);
 
         internal static T Throw<T>(this Exception<T> exception) => throw exception;
 

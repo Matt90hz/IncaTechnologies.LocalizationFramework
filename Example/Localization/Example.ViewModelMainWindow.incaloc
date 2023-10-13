@@ -1,25 +1,28 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <IncaTehcnologies NameSpace="Example" Class="ViewModelMainWindow">
-  <Localize Property="Title">
-    <en-EN>This is the title.</en-EN>
-    <fr-FR>C'est le titre.</fr-FR>
-    <es-ES>Este es el título.</es-ES>
-  </Localize>
-  <Localize Property="Description">
-    <en-EN>
-		This is an example of a description.
-		It can span multiple lines.
-		Tabulations are not red by the parser, maybe more options will be included in the future.
-	</en-EN>
-    <fr-FR>
-		Ceci est un exemple de description.
-		Il peut s'étendre sur plusieurs lignes.
-		Les tabulations ne sont pas rouges par l'analyseur, peut-être que plus d'options seront incluses à l'avenir.
-	</fr-FR>
-    <es-ES>
-		Este es un ejemplo de una descripción.
-		Puede abarcar varias líneas.
-		El analizador no muestra en rojo las tabulaciones, tal vez se incluyan más opciones en el futuro.
-	</es-ES>
-  </Localize>
+	
+<Localize Property="Title">
+<en-EN>This is the title.</en-EN>
+<fr-FR>C'est le titre.</fr-FR>
+<es-ES>Este es el título.</es-ES>
+</Localize>
+	
+<Localize Property="Description">
+<en-EN>
+This is an example of a description.
+It can span multiple lines.
+Tabulations are not read by the parser, maybe more options will be included in the future.
+</en-EN>
+<fr-FR>
+Ceci est un exemple de description.
+Il peut s'étendre sur plusieurs lignes.
+Les tableaux sont lus par l'analyseur, peut-être que d'autres options seront incluses à l'avenir.
+</fr-FR>
+<es-ES>
+Este es un ejemplo de una descripción. 
+Puede abarcar varias líneas. 
+Las tabulaciones son leídas por el analizador, tal vez se incluyan más opciones en el futuro.
+</es-ES>
+</Localize>
+	
 </IncaTehcnologies>

@@ -1,5 +1,4 @@
-﻿using System;
-using System.Globalization;
+﻿using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -8,7 +7,7 @@ using System.Security.Cryptography;
 using System.Threading;
 using System.Transactions;
 using System.Xml.Linq;
-using Localization.ExeptionResult;
+using Localization.ExceptionResult;
 using Localization.Extensions;
 using Localization.Interfaces;
 
@@ -25,10 +24,10 @@ namespace Localization
         public static IncaLocReader Default { get; } = new IncaLocReader();
 
         /// <inheritdoc/>
-        public virtual CultureInfo CurrentCulture { get; set; } = Thread.CurrentThread.CurrentCulture;
+        public virtual CultureInfo CurrentCulture { get; set; } = CultureInfo.CurrentCulture;
 
         /// <inheritdoc/>
-        public virtual CultureInfo DefaultCulture { get; set; } = Thread.CurrentThread.CurrentCulture;
+        public virtual CultureInfo DefaultCulture { get; set; } = CultureInfo.CurrentCulture;
 
         /// <inheritdoc/>
         public virtual string GetText(IncaLocParameters parameters)
@@ -37,16 +36,18 @@ namespace Localization
             var localizeElement = IncaLocFile(parameters, assembly).DescendantWithAttribute(parameters.PropertyIdentifier);
 
             //Return the translation
-            return TextWithCurrentCulture() 
-                ?? TextWithCurrentLanguage() 
-                ?? TextWithDefaultCulture() 
-                ?? TextWithDefaultLanguage() 
+            return TextAsCurrentCulture() 
+                ?? TextAsCurrentLanguage() 
+                ?? TextAsDefaultCulture() 
+                ?? TextAsDefaultLanguage() 
+                ?? TextAsAnyLanguage()
                 ?? string.Empty;
 
-            string? TextWithCurrentCulture() => localizeElement?.Element(CurrentCulture.Name)?.Value;
-            string? TextWithDefaultCulture() => localizeElement?.Element(DefaultCulture.Name)?.Value;
-            string? TextWithCurrentLanguage() => localizeElement?.Elements().FirstOrDefault(e => e.Name.LocalName[..2] == CurrentCulture.Name[..2])?.Value;
-            string? TextWithDefaultLanguage() => localizeElement?.Elements().FirstOrDefault(e => e.Name.LocalName[..2] == DefaultCulture.Name[..2])?.Value;
+            string? TextAsCurrentCulture() => localizeElement?.Element(CurrentCulture.Name)?.Value;
+            string? TextAsDefaultCulture() => localizeElement?.Element(DefaultCulture.Name)?.Value;
+            string? TextAsCurrentLanguage() => localizeElement?.Elements().FirstOrDefault(e => e.Name.LocalName[..2] == CurrentCulture.Name[..2])?.Value;
+            string? TextAsDefaultLanguage() => localizeElement?.Elements().FirstOrDefault(e => e.Name.LocalName[..2] == DefaultCulture.Name[..2])?.Value;
+            string? TextAsAnyLanguage() => localizeElement?.Elements().FirstOrDefault()?.Value;
         }
 
         static XDocument IncaLocFile(IncaLocParameters incaLocParameters, Assembly assembly) 
