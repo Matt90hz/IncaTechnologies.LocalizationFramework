@@ -28,7 +28,7 @@ internal static class SyntaxTreeExtensions
 
     internal static  string GetContaingClassName(this AttributeSyntax attributeSyntax) => attributeSyntax.Ancestors().OfType<ClassDeclarationSyntax>().First().Identifier.Text;
 
-    internal static string GetContainingNamespaceName(this AttributeSyntax attributeSyntax) => attributeSyntax.Ancestors().OfType<NamespaceDeclarationSyntax>().First().GetSyntaxNodeName();
+    internal static string GetContainingNamespaceName(this AttributeSyntax attributeSyntax) => attributeSyntax.Ancestors().OfType<BaseNamespaceDeclarationSyntax>().First().GetSyntaxNodeName();
 
     private static string AttributeName(this Type type) => type.Name.Replace("Attribute", string.Empty);
 }

@@ -8,7 +8,7 @@
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <PackageId>IncaTechnologies.LocalizationFramework.Tools</PackageId>
     <Title>IncaTechnologies Localization Framework Tools</Title>
-    <Version>1.0.2</Version>
+    <Version>1.0.4</Version>
     <Authors>IncaTechnologies</Authors>
     <Company />
     <Product>$(Title)</Product>
@@ -26,7 +26,8 @@
     <PackageIcon>IncaTechnologies_logo_128x128.png</PackageIcon>
     <PackageReleaseNotes>1.0.1 - Release
 1.0.2 - Bug fix and improvments
-1.0.3 - Bug fix could not find localize attribute</PackageReleaseNotes>
+1.0.3 - Bug fix could not find localize attribute
+1.0.4 - Bug fix with filescoped namespace</PackageReleaseNotes>
   </PropertyGroup>
 
   <ItemGroup>
