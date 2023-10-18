@@ -5,6 +5,7 @@ using System.Globalization;
 using System.Linq.Expressions;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
+using Example.OtherNameSpace;
 using Localization;
 
 namespace Example
@@ -18,13 +19,13 @@ namespace Example
         /// Example of a string to translate.
         /// </summary>
         [IncaLocalize]
-        public string? Title => GetText();
+        public string Title => GetText();
 
         /// <summary>
         /// Example of multi line string to translate.
         /// </summary>
         [IncaLocalize]
-        public string? Description => GetText();
+        public string Description => GetText();
 
         /// <summary>
         /// Item source used to change the culture.
@@ -35,6 +36,11 @@ namespace Example
         /// Command to test the change of the culture.
         /// </summary>
         public ChangeCultureCommand ChangeCultureCommand { get; } = new ChangeCultureCommand();
+
+        /// <summary>
+        /// Test the diffrent namespace localization.
+        /// </summary>
+        public ViewModelOtherNameSpace OtherNameSpace { get; } = new ViewModelOtherNameSpace();
 
         /// <summary>
         /// Create e new instance of <see cref="ViewModelMainWindow"/> and initializes it.
@@ -56,6 +62,7 @@ namespace Example
         {
             OnPropertyChanged(nameof(Title));
             OnPropertyChanged(nameof(Description));
+            OnPropertyChanged(nameof(OtherNameSpace));
         }
     }
 

@@ -1,0 +1,8 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<IncaTehcnologies NameSpace="Example.OtherNameSpace" Class="ViewModelOtherNameSpace">
+  <Localize Property="DecoratedProperty">
+    <en-EN>An other name space</en-EN>
+    <fr-FR>Un autre espace de noms</fr-FR>
+    <es-ES>Otro espacio de nombres</es-ES>
+  </Localize>
+</IncaTehcnologies>

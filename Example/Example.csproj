@@ -13,5 +13,6 @@
 
 	<ItemGroup Label="IncaLocalizeResources">
 		<EmbeddedResource Include="D:\VisualStudio\LocalizationFramework\Example\Localization\Example.ViewModelMainWindow.incaloc" />
+		<EmbeddedResource Include="D:\VisualStudio\LocalizationFramework\Example\Localization\Example.OtherNameSpace.ViewModelOtherNameSpace.incaloc" />
 	</ItemGroup>
 </Project>

@@ -5,7 +5,7 @@
 		<Nullable>enable</Nullable>
 		<PackageId>IncaTechnologies.LocalizationFramework</PackageId>
 		<Title>IncaTechnologies Localization Framework</Title>		
-		<Version>1.0.4</Version>
+		<Version>1.0.7</Version>
 		<Authors>IncaTechnologies</Authors>
 		<Company />
 		<Product>$(Title)</Product>
@@ -27,7 +27,10 @@
 1.0.1 - Bug fix
 1.0.2 - Included documentation
 1.0.3 - Improved stability
-1.0.4 - Removed the source generator that was never implemented</PackageReleaseNotes>
+1.0.4 - Removed the source generator that was never implemented
+1.0.5 - Fixed a bug in init.ps
+1.0.6 - Fixed a bug when add new cultures to .incaloc
+1.0.7 - Fixed persistent bug on init.ps1</PackageReleaseNotes>
 	</PropertyGroup>
 
 	<ItemGroup>

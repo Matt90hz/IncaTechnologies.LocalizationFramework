@@ -141,8 +141,8 @@ internal class Program
 
     static void GenerateIncaLocFile(Uri uri, IIncaLocGenerator generator, Options options)
     {
-        var file = uri.TryReadFile();
-        var attributes = GetLocalizeAttributes(file, options);
+        var file = uri.ReadFile().Value();
+        var attributes = LocalizeAttributes(file, options);
 
         foreach (var attribute in attributes)
         {
@@ -161,22 +161,17 @@ internal class Program
         }
     }
 
-    static IEnumerable<AttributeSyntax> GetLocalizeAttributes(string file, Options options)
+    static IEnumerable<AttributeSyntax> LocalizeAttributes(string file, Options options)
     {
-        if (string.IsNullOrEmpty(file)) return Enumerable.Empty<AttributeSyntax>();
-
         var syntaxTree = CSharpSyntaxTree.ParseText(file);
-
-        return FindLocalizeAttributes(syntaxTree, options).LogIfEmpty("No properties are decorated with IncaLocalizeAttribute.");
-    }
-
-    static IEnumerable<AttributeSyntax> FindLocalizeAttributes(SyntaxTree syntaxTree, Options options)
-    {
         var compilation = _compilation.AddSyntaxTrees(syntaxTree);
-
         if (options.Diagnostic) WriteDiagnostic(compilation);
 
-        return syntaxTree.FindAttributeOfType(compilation, typeof(IncaLocalizeAttribute));
+        var localizeAttributes = syntaxTree.FindAttributeOfType<IncaLocalizeAttribute>(compilation);
+
+        if (options.Verbose && localizeAttributes.IsEmpty()) Log($"Not found properties decorated with localize attribute.");
+
+        return localizeAttributes;
     }
 
     static void WriteDiagnostic(Compilation compilation)

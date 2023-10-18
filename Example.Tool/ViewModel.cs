@@ -9,6 +9,14 @@ namespace Example.Tool
 {
     internal class ViewModel
     {
-        [IncaLocalize] public string TestProperty {get;}
+        [IncaLocalize] public string TestProperty { get; }
+    }
+}
+
+namespace Example.Tool.OtherNameSpace
+{
+    internal class ViewModel
+    {
+        [IncaLocalize] public string TestProperty { get; }
     }
 }

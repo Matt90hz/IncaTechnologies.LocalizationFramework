@@ -73,28 +73,39 @@ namespace Localization
             }
         }
 
-        static XDocument LocalizeDocument(IncaLocParameters parameters, IEnumerable<CultureInfo> cultures, XDocument document) => document
-            .DescendantWithAttribute(parameters.PropertyIdentifier) is XElement localizeElement
-            ? cultures
-                .Where(culture => localizeElement.Element(culture.Name) is null)
-                .Select(culture => CultureElement(culture))
-                .Select(cultureElement => localizeElement.AddElement(cultureElement))
-                .Any()
-                ? document
-                : document
-            : document.Element(BASE_ELEMENT)
-                .AddElement(LocalizeElement(parameters))
-                .Elements().Last()
-                .AddElements(CultureElements(cultures))
-                .Document;
+        static XDocument LocalizeDocument(IncaLocParameters parameters, IEnumerable<CultureInfo> cultures, XDocument document)
+        {
+            var localizeElement = document.DescendantWithAttribute(parameters.PropertyIdentifier);
+
+            if (localizeElement is null)
+            {
+                document
+                    .Element(BASE_ELEMENT)
+                    .AddElement(LocalizeElement(parameters))
+                    .Elements().Last()
+                    .AddElements(CultureElements(cultures));
+            }
+            else
+            {
+                var missingCultures = cultures
+                    .Where(culture => localizeElement.Element(culture.Name) is null)
+                    .Select(culture => CultureElement(culture));
+
+                localizeElement.AddElements(missingCultures);
+            }
+
+            return document;
+        }
 
         static XDocument LocalizeDocument(IncaLocParameters parameters, IEnumerable<CultureInfo> cultures)
         {
             try
             {
-                return new XDocument().AddElement(BaseElement(parameters)).Elements().Last().AddElement(LocalizeElement(parameters))
-                    .Elements()
-                    .Last()
+                return new XDocument()
+                    .AddElement(BaseElement(parameters))
+                    .Elements().Last()
+                    .AddElement(LocalizeElement(parameters))
+                    .Elements().Last()
                     .AddElements(CultureElements(cultures))
                     .Document;
             }

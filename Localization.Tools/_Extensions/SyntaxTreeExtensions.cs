@@ -20,15 +20,13 @@ internal static class SyntaxTreeExtensions
             .FindAttributeByIdentifier(toEvaluate.AttributeName())
             .Where(attr => compilation.GetSemanticModel(syntaxTree).IsAttributeOfType(attr, toEvaluate));
 
-    internal static string GetSyntaxNodeName(this SyntaxNode syntaxNode) => syntaxNode.DescendantNodes().OfType<IdentifierNameSyntax>().First().Identifier.Text;
+    internal static IEnumerable<AttributeSyntax> FindAttributeOfType<T>(this SyntaxTree syntaxTree, CSharpCompilation compilation) => syntaxTree.FindAttributeOfType(compilation, typeof(T));
 
-    internal static string GetAttributeName(this AttributeSyntax attributeSyntax) => attributeSyntax.GetSyntaxNodeName();
+    internal static string DecoratedPropertyName(this AttributeSyntax attributeSyntax) => attributeSyntax.Ancestors().OfType<PropertyDeclarationSyntax>().First().Identifier.Text;
 
-    internal static string GetDecoratedPropertyName(this AttributeSyntax attributeSyntax) => attributeSyntax.Ancestors().OfType<PropertyDeclarationSyntax>().First().Identifier.Text;
+    internal static  string ContaingClassName(this AttributeSyntax attributeSyntax) => attributeSyntax.Ancestors().OfType<ClassDeclarationSyntax>().First().Identifier.Text;
 
-    internal static  string GetContaingClassName(this AttributeSyntax attributeSyntax) => attributeSyntax.Ancestors().OfType<ClassDeclarationSyntax>().First().Identifier.Text;
-
-    internal static string GetContainingNamespaceName(this AttributeSyntax attributeSyntax) => attributeSyntax.Ancestors().OfType<BaseNamespaceDeclarationSyntax>().First().GetSyntaxNodeName();
+    internal static string ContainingNamespaceName(this AttributeSyntax attributeSyntax) => attributeSyntax.Ancestors().OfType<BaseNamespaceDeclarationSyntax>().First().Name.ToString();
 
     private static string AttributeName(this Type type) => type.Name.Replace("Attribute", string.Empty);
 }
