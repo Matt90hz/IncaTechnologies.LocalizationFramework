@@ -22,7 +22,10 @@ namespace Localization
 
                 if (project.HasDescendantWithAttribute(embedPath)) return true;
 
-                if (project.HasDescendantWithAttribute(LABEL_INCA_LOCALIZE_RESOURCES) is false) project.AddElement(IncaLocalizeResourcesElement());
+                if (project.HasDescendantWithAttribute(LABEL_INCA_LOCALIZE_RESOURCES) is false) project
+                    .AddNode(new XText("\n\t"))
+                    .AddElement(IncaLocalizeResourcesElement())
+                    .AddNode(new XText("\n"));
 
                 project
                     .DescendantWithAttribute(LABEL_INCA_LOCALIZE_RESOURCES)!

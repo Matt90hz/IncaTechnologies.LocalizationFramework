@@ -11,8 +11,9 @@
 	  <ProjectReference Include="..\Localization\Localization.csproj" />
 	</ItemGroup>
 
+
 	<ItemGroup Label="IncaLocalizeResources">
-		<EmbeddedResource Include="D:\VisualStudio\LocalizationFramework\Example\Localization\Example.ViewModelMainWindow.incaloc" />
 		<EmbeddedResource Include="D:\VisualStudio\LocalizationFramework\Example\Localization\Example.OtherNameSpace.ViewModelOtherNameSpace.incaloc" />
+		<EmbeddedResource Include="D:\VisualStudio\LocalizationFramework\Example\Localization\Example.ViewModelMainWindow.incaloc" />
 	</ItemGroup>
 </Project>
