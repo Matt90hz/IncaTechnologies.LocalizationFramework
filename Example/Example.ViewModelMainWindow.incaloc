@@ -1,14 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <IncaTehcnologies NameSpace="Example" Class="ViewModelMainWindow">
   <Localize Property="Title">
-    <en-US></en-US>
-    <en-EN></en-EN>
+    <en-US>Hello</en-US>
     <fr-FR></fr-FR>
     <es-ES></es-ES>
   </Localize>
   <Localize Property="Description">
-    <en-US></en-US>
-    <en-EN></en-EN>
+    <en-US>Bye bye</en-US>
     <fr-FR></fr-FR>
     <es-ES></es-ES>
   </Localize>
