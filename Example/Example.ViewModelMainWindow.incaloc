@@ -2,12 +2,12 @@
 <IncaTehcnologies NameSpace="Example" Class="ViewModelMainWindow">
   <Localize Property="Title">
     <en-US>Hello</en-US>
-    <fr-FR></fr-FR>
-    <es-ES></es-ES>
+    <fr-FR>Bonjour</fr-FR>
+    <es-ES>Hola</es-ES>
   </Localize>
   <Localize Property="Description">
-    <en-US>Bye bye</en-US>
-    <fr-FR></fr-FR>
-    <es-ES></es-ES>
+    <en-US>Thanks</en-US>
+    <fr-FR>Merci</fr-FR>
+    <es-ES>Gracias</es-ES>
   </Localize>
 </IncaTehcnologies>

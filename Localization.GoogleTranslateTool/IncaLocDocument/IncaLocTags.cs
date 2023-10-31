@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Localization.GoogleTranslateTool.Translator
+namespace Localization.GoogleTranslateTool.IncaLocaDocument
 {
     internal static class IncaLocTags
     {

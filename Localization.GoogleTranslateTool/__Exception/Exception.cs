@@ -12,7 +12,7 @@ namespace Localization.GoogleTranslateTool.__Exception
 
         public T? ValueOrDefult { get; }
 
-        public T ValueOrThrow => IsThrown ? ValueOrDefult! : throw this;
+        public T ValueOrThrow => IsThrown ?  throw this : ValueOrDefult!;
 
         public Exception(T value)
         {
@@ -23,6 +23,9 @@ namespace Localization.GoogleTranslateTool.__Exception
         public Exception(string message) : base(message) { }
 
         public Exception(string message, Exception inner) : base(message, inner) { }
+
+        public static implicit operator Exception<T>(T value) => new(value);
+        public static implicit operator T(Exception<T> exception) => exception.ValueOrThrow;
     }
 
 
