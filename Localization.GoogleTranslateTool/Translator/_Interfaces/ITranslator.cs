@@ -1,14 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Globalization;
 
-namespace Localization.GoogleTranslateTool.Translator._Interfaces
+namespace Localization.GoogleTranslateTool.Translator._Interfaces;
+
+internal interface ITranslator
 {
-    internal interface ITranslator
-    {
-        Task TranslateAsync(Uri incaLocFile, CultureInfo transalteFrom, CancellationToken cancellationToken = default);
-    }
+    Task TranslateAsync(Uri incaLocFile, CultureInfo transalteFrom, CancellationToken cancellationToken = default);
 }

@@ -8,12 +8,19 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="LocalizationGoogle\Example.Tool.OtherNameSpace.ViewModel.incaloc" />
+    <None Remove="LocalizationGoogle\Example.Tool.ViewModel.incaloc" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="IncaTechnologies.LocalizationFramework" Version="1.0.7" />
   </ItemGroup>
 	
     <ItemGroup Label="IncaLocalizeResources">
 		<EmbeddedResource Include="D:\VisualStudio\LocalizationFramework\Example.Tool\Localization\Example.Tool.ViewModel.incaloc" />
 		<EmbeddedResource Include="D:\VisualStudio\LocalizationFramework\Example.Tool\Localization\Example.Tool.OtherNameSpace.ViewModel.incaloc" />
+		<EmbeddedResource Include="LocalizationGoogle\Example.Tool.OtherNameSpace.ViewModel.incaloc" />
+		<EmbeddedResource Include="LocalizationGoogle\Example.Tool.ViewModel.incaloc" />
 	</ItemGroup>
 
 </Project>

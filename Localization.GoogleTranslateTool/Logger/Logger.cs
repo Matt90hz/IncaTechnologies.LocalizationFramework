@@ -1,49 +1,46 @@
 ﻿using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Localization.GoogleTranslateTool.Logger
+namespace Localization.GoogleTranslateTool.Logger;
+
+internal class TranslatorLogger : ILogger<Translator.Translator>
 {
-    internal class Logger : ILogger
+    private readonly Func<LogLevel, bool> _filter;
+    private readonly object _lock = new();
+
+    public static ILogger<Translator.Translator> Default { get; } = new TranslatorLogger(_ => true);
+
+    public TranslatorLogger(Func<LogLevel, bool> filter)
     {
-        public static ILogger Default { get; } = new Logger();
+        _filter = filter;
+    }
 
-        public IDisposable? BeginScope<TState>(TState state) where TState : notnull => default;
+    public IDisposable? BeginScope<TState>(TState state) where TState : notnull => default;
 
-        public bool IsEnabled(LogLevel logLevel) => logLevel switch
+    public bool IsEnabled(LogLevel logLevel) => _filter(logLevel);
+
+    public void Log<TState>(LogLevel logLevel, EventId eventId, TState state, Exception? exception, Func<TState, Exception?, string> formatter)
+    {
+        if (IsEnabled(logLevel))
         {
-            LogLevel.Trace =>
-                #if TRACE
-                    true,
-                #else
-                    false,
-                #endif
-            LogLevel.Debug =>
-                #if DEBUG 
-                    true,
-                #else
-                    false,
-                #endif
-            LogLevel.Information => true,
-            LogLevel.Warning => true,
-            LogLevel.Error => true,
-            LogLevel.Critical => true,
-            LogLevel.None => false,
-            _ => false,
-        };
-
-        public void Log<TState>(LogLevel logLevel, EventId eventId, TState state, Exception? exception, Func<TState, Exception?, string> formatter)
-        {
-            if(IsEnabled(logLevel))
+            lock (_lock)
             {
-                Console.WriteLine($"[{eventId.Id,2}: {logLevel,-12}]");
-                var message = formatter(state, exception);
-                Console.WriteLine(message);
+                Console.ForegroundColor = logLevel switch
+                {
+                    LogLevel.Trace => ConsoleColor.White,
+                    LogLevel.Debug => ConsoleColor.White,
+                    LogLevel.Information => ConsoleColor.White,
+                    LogLevel.Warning => ConsoleColor.Yellow,
+                    LogLevel.Error => ConsoleColor.Red,
+                    LogLevel.Critical => ConsoleColor.Red,
+                    LogLevel.None => ConsoleColor.White,
+                    _ => ConsoleColor.White,
+                };
+
+                Console.WriteLine(state);
+                if (exception is not null) Console.WriteLine(exception.Message);
+
+                Console.ForegroundColor = ConsoleColor.White;
             }
         }
     }
-
 }

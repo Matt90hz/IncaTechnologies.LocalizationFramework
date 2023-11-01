@@ -1,32 +1,23 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿namespace Localization.GoogleTranslateTool.__Exception;
 
-namespace Localization.GoogleTranslateTool.__Exception
+internal class Exception<T> : Exception
 {
-    internal class Exception<T> : Exception
+    public bool IsThrown { get; } = true;
+
+    public T? ValueOrDefult { get; }
+
+    public T ValueOrThrow => IsThrown ? throw this : ValueOrDefult!;
+
+    public Exception(T value)
     {
-        public bool IsThrown { get; } = true;
-
-        public T? ValueOrDefult { get; }
-
-        public T ValueOrThrow => IsThrown ?  throw this : ValueOrDefult!;
-
-        public Exception(T value)
-        {
-            IsThrown = false;
-            ValueOrDefult = value;
-        }
-
-        public Exception(string message) : base(message) { }
-
-        public Exception(string message, Exception inner) : base(message, inner) { }
-
-        public static implicit operator Exception<T>(T value) => new(value);
-        public static implicit operator T(Exception<T> exception) => exception.ValueOrThrow;
+        IsThrown = false;
+        ValueOrDefult = value;
     }
 
+    public Exception(string message) : base(message) { }
 
+    public Exception(string message, Exception inner) : base(message, inner) { }
+
+    public static implicit operator Exception<T>(T value) => new(value);
+    public static implicit operator T(Exception<T> exception) => exception.ValueOrThrow;
 }

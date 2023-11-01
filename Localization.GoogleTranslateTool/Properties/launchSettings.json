@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "Localization.GoogleTranslateTool": {
+      "commandName": "Project",
+      "commandLineArgs": "-v -f \"en\" -i D:\\VisualStudio\\LocalizationFramework\\Example.Tool\\LocalizationGoogle\\"
+    }
+  }
+}

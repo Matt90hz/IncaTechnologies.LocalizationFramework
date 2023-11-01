@@ -5,9 +5,47 @@
     <TargetFramework>net7.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+    <GenerateDocumentationFile>True</GenerateDocumentationFile>
+    <PackageId>IncaTechnologies.LocalizationFramework.GoogleTranslateTools</PackageId>
+    <Title>IncaTechnologies Localization Framework Google Translate Tools</Title>
+    <Version>1.0.0</Version>
+    <Authors>IncaTechnologies</Authors>
+    <Company>IncaTechnologies</Company>
+    <Product>$(Title)</Product>
+    <Description>Tool that read .incaloc files and provide a google translation to the missing cultures besed on an altredy localized culture.</Description>
+    <Copyright>IncaTechnolologies - 2023</Copyright>
+    <PackageProjectUrl>https://github.com/Matt90hz/IncaTechnologies.LocalizationFramework</PackageProjectUrl>
+    <PackageIcon>IncaTechnologies_logo_128x128.png</PackageIcon>
+    <RepositoryUrl>https://github.com/Matt90hz/IncaTechnologies.LocalizationFramework.git</RepositoryUrl>
+    <PackageReadmeFile>README.GOOGLETRANSLATE.md</PackageReadmeFile>
+    <PackageTags>translate,localization,incatechnologies</PackageTags>
+    <PackageReleaseNotes>1.0.0 - Release</PackageReleaseNotes>
+    <PackAsTool>True</PackAsTool>
+    <ToolCommandName>inca-loc-google</ToolCommandName>
+    <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
+    <IncludeSymbols>False</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+    <PackageOutputPath>..\.nupkg</PackageOutputPath>
+    <NeutralLanguage>en</NeutralLanguage>
   </PropertyGroup>
 
   <ItemGroup>
+    <None Include="..\..\..\IncaTechnologies\IncaTechnologies_logo_128x128.png">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+    <None Include="..\LICENSE.txt">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+    <None Include="..\README.GOOGLETRANSLATE.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="CommandLineParser" Version="2.9.1" />
     <PackageReference Include="Google.Cloud.Translation.V2" Version="3.2.0" />
     <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="7.0.1" />
   </ItemGroup>

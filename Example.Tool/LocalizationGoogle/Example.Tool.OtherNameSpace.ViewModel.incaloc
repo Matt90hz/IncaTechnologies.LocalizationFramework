@@ -1,0 +1,8 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<IncaTehcnologies NameSpace="Example.Tool.OtherNameSpace" Class="ViewModel">
+  <Localize Property="TestProperty">
+    <en>Hello</en>
+    <fr></fr>
+    <es></es>
+  </Localize>
+</IncaTehcnologies>
