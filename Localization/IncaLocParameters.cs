@@ -5,7 +5,7 @@ namespace Localization
     /// <summary>
     /// Parameters used to generate .incaloc files.
     /// </summary>
-    public readonly struct IncaLocParameters 
+    public readonly struct IncaLocParameters
     {
         /// <summary>
         /// Namespace of the class.

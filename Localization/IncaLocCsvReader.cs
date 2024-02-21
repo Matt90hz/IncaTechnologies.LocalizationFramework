@@ -1,6 +1,6 @@
-﻿using System;
+﻿using Localization.Interfaces;
+using System;
 using System.Globalization;
-using Localization.Interfaces;
 
 namespace Localization
 {

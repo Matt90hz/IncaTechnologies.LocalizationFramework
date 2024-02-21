@@ -6,7 +6,7 @@ namespace Localization.Interfaces
     /// <summary>
     /// Generates .incalod files.
     /// </summary>
-    public interface IIncaLocGenerator 
+    public interface IIncaLocGenerator
     {
         /// <summary>
         /// All the <see cref="CultureInfo"/> that will be added to the .incaloc files generated.

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Runtime.CompilerServices;
 
 namespace Localization.ExceptionResult
 {
@@ -30,10 +29,10 @@ namespace Localization.ExceptionResult
 
         internal static T Throw<T>(this Exception<T> exception) => throw exception;
 
-        internal static T Value<T>(this Exception<T> exception) => exception.ValueOrDefault is null 
-            || (exception.ValueOrDefault is int value && value == default) 
-            || (exception.ValueOrDefault is bool flag && flag == default) 
-            ? throw exception 
+        internal static T Value<T>(this Exception<T> exception) => exception.ValueOrDefault is null
+            || (exception.ValueOrDefault is int value && value == default)
+            || (exception.ValueOrDefault is bool flag && flag == default)
+            ? throw exception
             : exception.ValueOrDefault;
     }
 }

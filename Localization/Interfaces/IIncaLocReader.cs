@@ -1,13 +1,11 @@
-﻿using System;
-using System.Globalization;
-using System.Text;
+﻿using System.Globalization;
 
 namespace Localization.Interfaces
 {
     /// <summary>
     /// Reads .incaloc files.
     /// </summary>
-    public interface IIncaLocReader 
+    public interface IIncaLocReader
     {
         /// <summary>
         /// Culture that will be extracted from the .incaloc files by <see cref="GetText(IncaLocParameters)"/>.

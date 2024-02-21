@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data.Common;
-using System.Globalization;
-using System.IO;
-using System.Threading;
-
-namespace Localization
+﻿namespace Localization
 {
     /// <summary>
     /// Base class for the elements in common between <see cref="IncaLocGenerator"/> and <see cref="IncaLocReader"/>.
@@ -35,7 +28,7 @@ namespace Localization
         /// <summary>
         /// The name given to the property attribute.
         /// </summary>
-        protected const string PROPERTY_ATTRIBUTE = "Property";    
+        protected const string PROPERTY_ATTRIBUTE = "Property";
     }
 
 }

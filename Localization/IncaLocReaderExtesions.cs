@@ -1,11 +1,11 @@
-﻿using System;
+﻿using Localization.ExceptionResult;
+using Localization.Extensions;
+using Localization.Interfaces;
+using System;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Xml.Linq;
-using Localization.ExceptionResult;
-using Localization.Extensions;
-using Localization.Interfaces;
 
 namespace Localization
 {
@@ -32,8 +32,8 @@ namespace Localization
         internal static string GetText(this IIncaLocReader incaLocReader, IncaLocParameters parameters, Assembly assembly)
             => incaLocReader.GetText(parameters, assembly.GetEmbeddedIncaLocFile(parameters));
 
-        internal static string GetText(this IIncaLocReader incaLocReader, IncaLocParameters parameters, XDocument incaLocFile) 
-            => incaLocFile.DescendantWithAttribute(parameters.PropertyIdentifier) is XElement localizeElement 
+        internal static string GetText(this IIncaLocReader incaLocReader, IncaLocParameters parameters, XDocument incaLocFile)
+            => incaLocFile.DescendantWithAttribute(parameters.PropertyIdentifier) is XElement localizeElement
             ? incaLocReader.GetText(localizeElement)
             : string.Empty;
 

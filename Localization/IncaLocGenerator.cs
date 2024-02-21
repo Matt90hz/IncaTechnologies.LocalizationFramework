@@ -3,16 +3,10 @@ using Localization.Extensions;
 using Localization.Interfaces;
 using System;
 using System.Collections.Generic;
-using System.Data.Common;
 using System.Globalization;
 using System.IO;
 using System.Linq;
-using System.Runtime.InteropServices.ComTypes;
-using System.Security.Cryptography.X509Certificates;
-using System.Threading;
-using System.Xml;
 using System.Xml.Linq;
-using System.Xml.Schema;
 
 namespace Localization
 {

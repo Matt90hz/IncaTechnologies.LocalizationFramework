@@ -1,5 +1,4 @@
-﻿using Localization.Extensions;
-using Localization.ExceptionResult;
+﻿using Localization.ExceptionResult;
 using Localization.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -59,14 +58,14 @@ namespace Localization
             //    var csvDocuemnt = File.Exists(filePath)
             //        ? UpdateCsv(parameter, Cultures, filePath).Value()
             //        : CreateCsv(parameter, Cultures);
-                
+
             //    csvDocuemnt.Save(filePath);
 
             //    IncaLocalizeResources.EmbedFile(ProjectFile, filePath).Value();
             //}
         }
 
-        static Exception<StringBuilder> UpdateCsv(IncaLocParameters parameters, IEnumerable<CultureInfo> cultures, string filePath) 
+        static Exception<StringBuilder> UpdateCsv(IncaLocParameters parameters, IEnumerable<CultureInfo> cultures, string filePath)
         {
             try
             {

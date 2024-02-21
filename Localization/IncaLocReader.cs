@@ -1,14 +1,6 @@
-﻿using System.Globalization;
-using System.IO;
-using System.Linq;
+﻿using Localization.Interfaces;
+using System.Globalization;
 using System.Reflection;
-using System.Security.Cryptography;
-using System.Threading;
-using System.Transactions;
-using System.Xml.Linq;
-using Localization.ExceptionResult;
-using Localization.Extensions;
-using Localization.Interfaces;
 
 namespace Localization
 {
@@ -30,7 +22,7 @@ namespace Localization
 
         /// <inheritdoc/>
         public virtual string GetText(IncaLocParameters parameters) => this.GetText(parameters, Assembly.GetCallingAssembly());
-        
+
     }
 
 }
