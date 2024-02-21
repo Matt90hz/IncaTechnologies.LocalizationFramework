@@ -13,19 +13,19 @@ namespace Example
     /// <summary>
     /// Simple view model to show how translation actually take place.
     /// </summary>
-    public class ViewModelMainWindow : _ViewModelBase
+    public class ViewModelMainWindow : ViewModelBase
     {
         /// <summary>
         /// Example of a string to translate.
         /// </summary>
         [IncaLocalize]
-        public string Title => GetText();
+        public string Title => this.GetText();
 
         /// <summary>
         /// Example of multi line string to translate.
         /// </summary>
         [IncaLocalize]
-        public string Description => GetText();
+        public string Description => ParentGetText();
 
         /// <summary>
         /// Item source used to change the culture.
@@ -94,7 +94,7 @@ namespace Example
     /// <summary>
     /// Example of how to build a base class that infer the <see cref="IncaLocParameters"/>.
     /// </summary>
-    public abstract class _ViewModelBase : INotifyPropertyChanged
+    public abstract class ViewModelBase : INotifyPropertyChanged
     {
         /// <inheritdoc/>
         public event PropertyChangedEventHandler? PropertyChanged;
@@ -113,7 +113,7 @@ namespace Example
         /// </summary>
         /// <param name="propertyName"></param>
         /// <returns></returns>
-        protected virtual string GetText([CallerMemberName] string? propertyName = null)
+        protected virtual string ParentGetText([CallerMemberName] string? propertyName = null)
         {
             if (propertyName is null) return string.Empty;
 

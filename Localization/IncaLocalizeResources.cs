@@ -8,11 +8,14 @@ namespace Localization
 {
     internal static class IncaLocalizeResources
     {
+#pragma warning disable IDE1006
         const string INCLUDE = "Include";
         const string LABEL = "Label";
         const string ITEM_GROUP = "ItemGroup";
         const string LABEL_INCA_LOCALIZE_RESOURCES = "IncaLocalizeResources";
         const string ELEMENT_EMBEDDED_RESOURCE = "EmbeddedResource";
+#pragma warning restore IDE1006
+
 
         internal static Exception<bool> EmbedFile(string projectPath, string embedPath)
         {

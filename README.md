@@ -11,9 +11,7 @@ The main two classes of the framework are `IncaLocReader` and `IncLocGenerator`.
 
 ### How to use IncaReader?
 
-`IncaLocReader` is the default concrete implementation of `IIncaLocReader`. It can be customized such that the created version can work in a new way or it can be personalized by overriding its methods and properties.
-
-To use the default implementation your project must embed .incaloc files as a resource that reflects the properties that has to be localized. This file must be an xml file that is named as [NameSpace].[Class].incaloc, the content must match the following pattern:
+`IncaLocReader` is a concrete implementation of `IIncaLocReader`. It can be customized by overriding its methods and properties if needed. To use this implementation your project must embed .incaloc files as a resource that reflects the properties that shall be localized. This file must be an xml file whose name match the pattern **[NameSpace].[Class].incaloc**, the content of the file instead must match the following pattern:
 
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
@@ -31,35 +29,44 @@ To use the default implementation your project must embed .incaloc files as a re
 </IncaTehcnologies>
 ```
 
-Thus, the root element must be *IncaTchnologies* and it has two attributes *NameSpace* and *Class*. Inside this root element, there are contained as many *Localize* elements as are needed.
-Every *Localize* element has a *Property* attribute that points to the property that has to be localized. It contains elements named after the culture codes, the languages, for which the localization is avaliable.
+Thus, the root element must be *IncaTchnologies* and it shall have two attributes *NameSpace* and *Class*. Inside this root element shall be contained as many *Localize* elements as are needed.
+Every *Localize* element shall have a *Property* attribute that points to the property that shall be localized. It contains elements named after the culture codes for which the localization is avaliable.
 In the snippet are included codes for English, Spanish and French but any culture code can be included.
 
-`IncaLocReader` has been created to work with MVVM design pattern and it might be incorporeted in your code like this:
+`IncaLocReader.GetText(IncaLocParameters parameters)` can be used to retrive the translated text. For example, the following code can be used in a ViewModel:
 
 ```csharp
-public abstract class _ViewModelBase
+public abstract class ViewModelBase
 {
     protected virtual string GetText([CallerMemberName] string? propertyName = null)
     {
-        return IncaLocService.IncaLocReader.GetText(new IncaLocParameters(
+        return IncaLocReader.Default.GetText(new IncaLocParameters(
             nameSpace: this.GetType().Namespace,
             classIdentifier: this.GetType().Name,
             propertyIdentifier: propertyName));
     }
 }
 
-public class MyViewModel : _ViewModelBase
+public class MyViewModel : ViewModelBase
 {
-    public string? FirstProperty => GetText();
+    public string FirstProperty => GetText();
 
-    public string? SecondProperty => GetText();
+    public string SecondProperty => GetText();
 }
 ```
 
-The `GetText(IncaLocParameters param)` method of `IncaLocReader` will automatically look for an .incaloc file embedded in the project whose name matches the invoker class and retrieve the text correspondent to the culture specified in the property `IncaLocReader.CurrentCulture`.
+The interface `IIncaLocReader` comes with some handy extension methods that can be used to retrieve the localized text in a more concise way. For example, the previous code can be rewritten as:
 
-In the snippet, `IncaLocService` is used. It is simply a utility class that returns a singleton instance of `IncaLocReader`. It is not required to use this class to get an instance of `IncaLocReader`.  
+```csharp
+public class MyClass
+{
+    public string FirstProperty => this.GetText();
+
+    public string SecondProperty => this.GetText();
+}
+```
+
+The `GetText()` method in the first example will look for an .incaloc file embedded in the project/library that called the method. In the second example the assembly containing the object passed as parameter is used. Then the most relevant translation is retrived from the file. The most relevant translation is the one that matches the `IIncaLocReader.CurrentCulture` property. If no match is fonud the `IIncaLocReader.DefaultCulture` is used. If no match is found again, the first translation found is used. If no translation is found at all, the method returns an empty string.
 
 ### How to use IncaLocGenerator?
 
@@ -85,13 +92,13 @@ It also automatically embeds the file to the project as a resource.
 
 Example:
 ```csharp
-public class MyViewModel : _ViewModelBase
+public class MyClass
 {
     [IncaLocalize]
-    public string? FirstProperty => GetText();
+    public string FirstProperty => this.GetText();
 
     [IncaLocalize]
-    public string? SecondProperty => GetText();
+    public string SecondProperty => this.GetText();
 }
 ```
 
@@ -143,29 +150,21 @@ My ultimate goal was not only to create a framework that I needed but I was also
 
 In the next update (if ever there will be one), I would like to use code generators in order to create programmatically the properties that has to be localized. This is the result I would like to get:
 ```csharp
-public partial class MyViewModel : _ViewModelBase
+public partial class MyViewModel : ViewModelBase
 {
     [IncaAutoLocalize]
-    string? FirstProperty;
+    string FirstProperty;
 
     [IncaAutoLocalize]
-    string? SecondProperty;
+    string SecondProperty;
 }
 
 //Generated
 partial class MyViewModel
 {
-    protected virtual string GetText([CallerMemberName] string? propertyName = null)
-    {
-        return IncaLocService.IncaLocReader.GetText(new IncaLocParameters(
-            nameSpace: this.GetType().Namespace,
-            classIdentifier: this.GetType().Name,
-            propertyIdentifier: propertyName));
-    }
+    public string FirstProperty => this.GetText();
 
-    public string? FirstProperty => GetText();
-
-    public string? SecondProperty => GetText();
+    public string SecondProperty => this.GetText();
 
 }
 ```

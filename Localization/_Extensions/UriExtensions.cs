@@ -17,7 +17,7 @@ namespace Localization.Extensions
 
             if (lastDotIndex == -1) return string.Empty;
 
-            return uri.LocalPath.Substring(lastDotIndex + 1);
+            return uri.LocalPath[(lastDotIndex + 1)..];
         }
 
         internal static Uri? FileWithExtension(this Uri uri, string ext) => uri.Files().FirstOrDefault(u => u.LocalPath.EndsWith(ext));

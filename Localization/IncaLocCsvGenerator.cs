@@ -1,6 +1,5 @@
 ﻿using Localization.Extensions;
 using Localization.ExceptionResult;
-using Localization.Extensions;
 using Localization.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -51,27 +50,28 @@ namespace Localization
         {
             throw new NotImplementedException();
 
-            foreach (var parameter in parameters)
-            {
-                var filePath = Path.Combine(StoreLocation, parameter.FileName());
+            //foreach (var parameter in parameters)
+            //{
+            //    var filePath = Path.Combine(StoreLocation, parameter.FileName());
 
-                Directory.CreateDirectory(StoreLocation);
+            //    Directory.CreateDirectory(StoreLocation);
 
-                var csvDocuemnt = File.Exists(filePath)
-                    ? UpdateCsv(parameter, Cultures, filePath).Value()
-                    : CreateCsv(parameter, Cultures);
+            //    var csvDocuemnt = File.Exists(filePath)
+            //        ? UpdateCsv(parameter, Cultures, filePath).Value()
+            //        : CreateCsv(parameter, Cultures);
                 
-                csvDocuemnt.Save(filePath);
+            //    csvDocuemnt.Save(filePath);
 
-                IncaLocalizeResources.EmbedFile(ProjectFile, filePath).Value();
-            }
+            //    IncaLocalizeResources.EmbedFile(ProjectFile, filePath).Value();
+            //}
         }
 
         static Exception<StringBuilder> UpdateCsv(IncaLocParameters parameters, IEnumerable<CultureInfo> cultures, string filePath) 
         {
             try
             {
-                var csv = new StringBuilder(File.ReadAllText(filePath));
+                var text = File.ReadAllText(filePath);
+                var csv = new StringBuilder(text);
 
                 return csv;
             }

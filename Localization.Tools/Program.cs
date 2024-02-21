@@ -92,6 +92,7 @@ internal static class OptionsExtensions
         }
         catch (Exception e)
         {
+            if (log is not null) log(e);
             return new Exception<Uri>("Invalid Output.", e);
         }
     }
