@@ -4,18 +4,30 @@ namespace Localization.ExceptionResult
 {
     internal class Exception<T> : Exception
     {
+        internal bool IsError { get; }
+
         internal T ValueOrDefault { get; } = default!;
 
         internal Exception(T value)
         {
+            IsError = false;
             ValueOrDefault = value;
         }
 
-        internal Exception() { }
+        internal Exception() 
+        {
+            IsError = true;
+        }
 
-        internal Exception(string message) : base(message) { }
+        internal Exception(string message) : base(message) 
+        {
+            IsError = false;
+        }
 
-        internal Exception(string message, Exception innerException) : base(message, innerException) { }
+        internal Exception(string message, Exception innerException) : base(message, innerException)
+        {
+            IsError = true;
+        }
 
         public static implicit operator Exception<T>(T t) => new Exception<T>(t);
         public static implicit operator T(Exception<T> exception) => exception.ValueOrDefault;
