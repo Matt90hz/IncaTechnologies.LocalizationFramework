@@ -15,13 +15,50 @@ namespace Localization
     public static class IncaLocReaderExtesions
     {
         /// <summary>
-        /// Get the localized text from the .incaloc file using the default <see cref="IIncaLocReader"/>. It uses the name of the caller as identifier.
+        /// Get the localized text from the .incaloc file using the default <see cref="IIncaLocReader"/>. 
+        /// It uses the name of the caller as identifier. If nothing is found the alternative is returned.
+        /// </summary>
+        /// <param name="toTranslate"></param>
+        /// <param name="propertyName"></param>
+        /// <param name="incaLocReader"></param>
+        /// <returns>Localized text or the name of the property to localize.</returns>
+        public static string GetTextOrPropertyName(
+            this object toTranslate,
+            [CallerMemberName] string propertyName = "",
+            IIncaLocReader? incaLocReader = null)
+            => toTranslate.GetTextOr(propertyName, propertyName, incaLocReader);
+
+        /// <summary>
+        /// Get the localized text from the .incaloc file using the default <see cref="IIncaLocReader"/>. 
+        /// It uses the name of the caller as identifier. If nothing is found the alternative is returned.
+        /// </summary>
+        /// <param name="toTranslate"></param>
+        /// <param name="alternative">Alternative text</param>
+        /// <param name="propertyName"></param>
+        /// <param name="incaLocReader"></param>
+        /// <returns>Localized text or <paramref name="alternative"/>.</returns>
+        public static string GetTextOr(
+            this object toTranslate,
+            string alternative,
+            [CallerMemberName] string propertyName = "",
+            IIncaLocReader? incaLocReader = null)
+            => toTranslate.GetText(propertyName, incaLocReader) is string translated
+            && string.IsNullOrEmpty(translated) is false
+            ? translated
+            : alternative;
+
+        /// <summary>
+        /// Get the localized text from the .incaloc file using the default <see cref="IIncaLocReader"/>. 
+        /// It uses the name of the caller as identifier.
         /// </summary>
         /// <param name="toTranslate">Used just to extract the type</param>
         /// <param name="propertyName"></param>
         /// <param name="incaLocReader"></param>
         /// <returns>Translated text or an empty string if nothing as been found.</returns>
-        public static string GetText(this object toTranslate, [CallerMemberName] string propertyName = "", IIncaLocReader? incaLocReader = null)
+        public static string GetText(
+            this object toTranslate,
+            [CallerMemberName] string propertyName = "",
+            IIncaLocReader? incaLocReader = null)
         {
             var parameters = toTranslate.GetParameters(propertyName);
             var assembly = Assembly.GetAssembly(toTranslate.GetType());
@@ -30,7 +67,9 @@ namespace Localization
         }
 
         internal static string GetText(this IIncaLocReader incaLocReader, IncaLocParameters parameters, Assembly assembly)
-            => incaLocReader.GetText(parameters, assembly.GetEmbeddedIncaLocFile(parameters));
+            => assembly.GetEmbeddedIncaLocFile(parameters) is XDocument incaLocFile
+            ?  incaLocReader.GetText(parameters, incaLocFile)
+            : string.Empty;
 
         internal static string GetText(this IIncaLocReader incaLocReader, IncaLocParameters parameters, XDocument incaLocFile)
             => incaLocFile.DescendantWithAttribute(parameters.PropertyIdentifier) is XElement localizeElement
@@ -53,24 +92,21 @@ namespace Localization
             string? TextAsAnyLanguage() => localizeElement.Elements().FirstOrDefault()?.Value;
         }
 
-        internal static XDocument GetEmbeddedIncaLocFile(this Assembly assembly, IncaLocParameters incaLocParameters)
+        internal static XDocument? GetEmbeddedIncaLocFile(this Assembly assembly, IncaLocParameters incaLocParameters)
         {
             try
             {
                 var fileName = incaLocParameters.FileName();
                 var resourceName = assembly.FindManifestResourceName(fileName);
-                var stream = assembly.GetManifestResourceStream(resourceName);
+                using var stream = assembly.GetManifestResourceStream(resourceName);
 
                 var xml = XDocument.Load(stream);
 
-                //Manually dispose of the stream just in case
-                stream.Dispose();
-
                 return xml;
             }
-            catch (Exception e)
+            catch
             {
-                return new Exception<XDocument>("Failed to retrive XDocument from the embedded files.", e);
+                return null;
             }
         }
 
