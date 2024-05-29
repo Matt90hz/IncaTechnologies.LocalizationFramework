@@ -20,6 +20,7 @@
             <TextBlock Text="{Binding Description}" FontSize="18" TextWrapping="Wrap"/>
             <TextBlock Text="{Binding OtherNameSpace.DecoratedProperty}" FontSize="16"/>
             <TextBlock Text="{Binding OtherNameSpace.NotDecoratedProperty}" FontSize="16"/>
+            <TextBlock Text="{Binding NotAvailableExample}" FontSize="16" Foreground="Red"/>
         </StackPanel>
 
         <StackPanel Orientation="Horizontal" Margin="5" HorizontalAlignment="Center" VerticalAlignment="Bottom">

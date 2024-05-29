@@ -28,6 +28,12 @@ namespace Example
         public string Description => ParentGetText();
 
         /// <summary>
+        /// Example to test missing translation options.
+        /// </summary>
+        [IncaLocalize]
+        public string NotAvailableExample => this.GetTextOrPropertyName();
+
+        /// <summary>
         /// Item source used to change the culture.
         /// </summary>
         public IEnumerable<string> SupportedCulture { get; } = new[] { "en-EN", "fr-FR", "es-ES", "en", "es", "fr", "en-US", "cz" };
