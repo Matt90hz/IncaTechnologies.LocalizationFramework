@@ -5,7 +5,7 @@
 		<Nullable>enable</Nullable>
 		<PackageId>IncaTechnologies.LocalizationFramework</PackageId>
 		<Title>IncaTechnologies Localization Framework</Title>		
-		<Version>1.0.9</Version>
+		<Version>1.0.10</Version>
 		<Authors>IncaTechnologies</Authors>
 		<Company />
 		<Product>$(Title)</Product>
@@ -32,7 +32,8 @@
 1.0.6 - Fixed a bug when add new cultures to .incaloc
 1.0.7 - Fixed persistent bug on init.ps1
 1.0.8 - Added helpers to translate text
-1.0.9 - Added more helpers to translate text</PackageReleaseNotes>
+1.0.9 - Added more helpers to translate text
+1.0.10 - Reduced the exception thrown when .incaloc files are not yet created</PackageReleaseNotes>
 	</PropertyGroup>
 
 	<ItemGroup>

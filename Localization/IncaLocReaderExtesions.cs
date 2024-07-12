@@ -1,5 +1,4 @@
-﻿using Localization.ExceptionResult;
-using Localization.Extensions;
+﻿using Localization.Extensions;
 using Localization.Interfaces;
 using System;
 using System.Linq;
@@ -98,10 +97,11 @@ namespace Localization
             {
                 var fileName = incaLocParameters.FileName();
                 var resourceName = assembly.FindManifestResourceName(fileName);
+
+                if (resourceName is null) return null;
+
                 using var stream = assembly.GetManifestResourceStream(resourceName);
-
                 var xml = XDocument.Load(stream);
-
                 return xml;
             }
             catch
@@ -119,5 +119,4 @@ namespace Localization
         internal static IncaLocParameters GetParameters(string nameSpace, string className, string propertyName)
             => new IncaLocParameters(nameSpace, className, propertyName);
     }
-
 }
